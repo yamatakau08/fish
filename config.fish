@@ -11,13 +11,16 @@ switch (uname -s)
 end
 
 # load private.fish, e.g. proxy...
-source $HOME/.config/fish/private.fish
+set PRIVATE_FISH_FILE $HOME/.config/fish/private.fish
+if test -f $PRIVATE_FISH_FILE
+   source $PRIVATE_FISH_FILE
 
-# cygwinでaws使うなら有効にしておいた方がよいかも... bashから引き継がれているように見える？
-# Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
-# aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
-set -x HTTP_PROXY  $PROXY
-set -x HTTPS_PROXY $PROXY
+   # cygwinでaws使うなら有効にしておいた方がよいかも... bashから引き継がれているように見える？
+   # Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
+   # aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
+   set -x HTTP_PROXY  $PROXY
+   set -x HTTPS_PROXY $PROXY
+end
 
 # for crontab and so on
 set -x EDITOR	vi
