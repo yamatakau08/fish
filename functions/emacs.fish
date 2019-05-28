@@ -12,7 +12,7 @@ switch (uname -s)
 # runemacs.exe CAN     execute other commands
 # emacs.exe    can NOT execute other commands
 #	/c/msys64/mingw64/bin/runemacs           $argv # somehow google-translate doesn't work
-	/c/winbin/emacs-26.1-x86_64/bin/runemacs $argv # use gnu ftp binary
+	/c/winbin/emacs-26.2-x86_64/bin/runemacs $argv # use gnu ftp binary
     case '*'
 	echo "add 'uname' label in ~/.config/fish/functions/emacs.fish"
     end
