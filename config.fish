@@ -1,13 +1,34 @@
 switch (uname -s)
     case 'MINGW64*'
         set -x PATH /mingw64/bin $PATH ^ /dev/null
-	set DPREFIX /c
+	set -x EDITOR vim
+
+	# csv make
+	set -x PATH /c/winbin/csvmake/ $PATH ^ /dev/null
+
+
+	# for aws on Windows program
+	set -x PATH /c/Program\ Files/Amazon/AWSCLI/bin/ $PATH ^ /dev/null
+
+	# for jdk on Windows program
+	set -x PATH /c/Program\ Files/Java/jdk-12.0.1/bin $PATH ^ /dev/null
+
+	# for adb
+	set -x PATH /c/winbin/platform-tools $PATH ^ /dev/null
+
+	# for appium
+	set -x ANDROID_HOME /winbin
+	set -x JAVA_HOME /Program\ Files/Java/jdk-12.0.1
+	set -x NO_PROXY localhost
+
     case 'MINGW32*'
         set -x PATH /mingw32/bin $PATH ^ /dev/null
 	set DPREFIX /c
+	set -x EDITOR vim
     case 'CYGWIN*'
 	set DPREFIX /cygdrive/c
     case *
+        set -x EDITOR vi
 end
 
 # load private.fish, e.g. proxy...
@@ -22,8 +43,6 @@ if test -f $PRIVATE_FISH_FILE
    set -x HTTPS_PROXY $PROXY
 end
 
-# for crontab and so on
-set -x EDITOR	vi
 # for Subversion
 set -x SVN_EDITOR $EDITOR
 
@@ -37,9 +56,6 @@ set -x LESSHISTFILE $HOME/.history/.lesshst
 # use ^ /dev/null when set $PATH
 # amazon web service
 set -x PATH ~/.local/bin $PATH ^ /dev/null
-
-# csv make
-set -x PATH $DPREFIX/winbin/csvmake/ $PATH ^ /dev/null
 
 # ~/bin for my bin, plantuml batch file
 set -x PATH ~/bin $PATH ^ /dev/null
