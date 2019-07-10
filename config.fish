@@ -23,7 +23,7 @@ if test -f $PRIVATE_FISH_FILE
 end
 
 # for crontab and so on
-set -x EDITOR	vi
+#set -x EDITOR	vi
 # for Subversion
 set -x SVN_EDITOR $EDITOR
 
@@ -43,3 +43,25 @@ set -x PATH $DPREFIX/winbin/csvmake/ $PATH ^ /dev/null
 
 # ~/bin for my bin, plantuml batch file
 set -x PATH ~/bin $PATH ^ /dev/null
+
+### for appium
+# for adb
+set -x ANDROID_HOME ~/Library/Android/sdk
+set -x PATH $ANDROID_HOME/platform-tools $PATH ^ /dev/null
+set -x PATH $ANDROID_HOME/tools $PATH ^ /dev/null
+
+# for java
+#set -x JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/A/Commands
+#set -x JAVA_HOME /usr/libexec/java_home
+#set -x PATH $JAVA_HOME $PATH ^ /dev/null
+
+# to supress openssl error message when brew upgrade ruby-build on Mac
+set -x PATH /usr/local/opt/openssl/bin $PATH ^ /dev/null
+
+# for ruby bundler ...
+#set -x PATH $HOME/.gem/ruby/2.3.0/bin $PATH ^ /dev/null
+# rbenv
+rbenv init - | source
+
+# for opencv4nodejs
+set -x NODE_PATH (npm root -g)
