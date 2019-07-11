@@ -2,7 +2,7 @@ switch (uname -s)
     case 'MINGW64*'
         # MSYS2 MINGW64 shell lauhcer property working folder C:\msys64 is set as a directory when launch
 	# change it to C:\yama
-	# set -x HOME /c/yama
+	# set -x HOME /c/yama # this doesn't effect
 
         set -x PATH /mingw64/bin $PATH ^ /dev/null
 	set -x EDITOR vim
@@ -13,16 +13,17 @@ switch (uname -s)
 	# for aws on Windows program
 	set -x PATH /c/Program\ Files/Amazon/AWSCLI/bin/ $PATH ^ /dev/null
 
-	# for jdk on Windows program
-	set -x PATH /c/Program\ Files/Java/jdk-12.0.1/bin $PATH ^ /dev/null
-
 	# for adb
 	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH ^ /dev/null
 
-	# for appium
-	set -x ANDROID_HOME /winbin/Android/Sdk
-	set -x JAVA_HOME /Program\ Files/Java/jdk-12.0.1
+	# jdk on Windows program
+	set -x PATH /c/Program\ Files/Java/jdk-12.0.1/bin $PATH ^ /dev/null
+
+	## for appium
 	set -x NO_PROXY localhost
+	#  appium_lib ruby
+	set -x ANDROID_HOME /c/winbin/Android/Sdk
+	set -x JAVA_HOME    /c/Program\ Files/Java/jdk-12.0.1
 
     case 'MINGW32*'
         set -x PATH /mingw32/bin $PATH ^ /dev/null
