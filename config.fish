@@ -21,10 +21,15 @@ switch (uname -s)
 
 	## for appium
 	set -x NO_PROXY localhost
-	#  appium_lib ruby
+	#  for appium CLI on ruby
+	# if set C:\winbin\Android\Sdk\Platform-tools in environment path on dos,
+	# you will get UnknownError: An unknown server-side error occurred while processing the command. Original error: Could not find 'adb.exe' in ["c:\\c\\winbin\\Android\\Sdk\\platform-tools\\adb.exe" ...
+	# appium GUI works normally
 	set -x ANDROID_HOME /c/winbin/Android/Sdk
 	set -x JAVA_HOME    /c/Program\ Files/Java/jdk-12.0.1
 
+	# to display prompt when execute bash from fish
+	set -x MSYS2_PS1 '\h:\W \u\$'
     case 'MINGW32*'
         set -x PATH /mingw32/bin $PATH ^ /dev/null
 	set DPREFIX /c
