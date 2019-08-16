@@ -14,5 +14,4 @@ function axml
   adb -t $tid shell uiautomator dump $xmlf
   adb -t $tid pull  $xmlf $argv[1] # if $argv[1] is not specified, xml file name is pulled is xml
   adb -t $tid shell rm $xmlf
-
 end
