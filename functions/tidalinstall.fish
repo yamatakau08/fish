@@ -5,7 +5,8 @@ function tidalinstall
 
   read -P "select transport_id: " tid
 
-  echo "uninstalling com.aspiro.tidal"
+  echo "uninstalling com.aspiro.tidal..."
   adb -t $tid uninstall com.aspiro.tidal
+  echo "installing com.aspiro.tidal..."
   adb -t $tid install $argv[1]
 end

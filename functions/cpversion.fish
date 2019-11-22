@@ -15,7 +15,11 @@ function cpversion
 
   read -P "select transport_id: " tid
 
+  # adb shell getprop 複数指定はできないので、個別で
   adb -t $tid shell getprop ro.product.model
+  adb -t $tid shell getprop ro.model.fwversion
   adb -t $tid shell getprop ro.sony.buildtype
+  adb -t $tid shell getprop ro.build.date
+
   adb -t $tid shell cat $verf
 end
