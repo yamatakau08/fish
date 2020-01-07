@@ -80,6 +80,12 @@ if test -f $PRIVATE_FISH_FILE
    # aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
    set -x HTTP_PROXY  $PROXY
    set -x HTTPS_PROXY $PROXY
+
+   # for wget, wget use enviroment variable with small character, not big one
+   # https://qiita.com/nutti/items/4ed09d3d61ccad49069b
+   set -x http_proxy  $PROXY
+   set -x https_proxy $PROXY
+   set -x ftp_proxy   $PROXY
 end
 
 # for Subversion
