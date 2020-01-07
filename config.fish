@@ -1,4 +1,4 @@
-switch (uname -s)
+switch (uname)
     case 'MINGW64*'
         # MSYS2 MINGW64 shell lauhcer property working folder C:\msys64 is set as a directory when launch
 	# change it to C:\yama
@@ -68,6 +68,8 @@ switch (uname -s)
 	# amazon web service
 	set -x PATH ~/.local/bin $PATH ^ /dev/null
 
+	## for brew doctor
+	set -x PATH /usr/local/sbin $PATH ^ /dev/null
 end
 
 # load private.fish, e.g. proxy...
@@ -75,17 +77,37 @@ set PRIVATE_FISH_FILE $HOME/.config/fish/private.fish
 if test -f $PRIVATE_FISH_FILE
    source $PRIVATE_FISH_FILE
 
-   # cygwinでaws使うなら有効にしておいた方がよいかも... bashから引き継がれているように見える？
-   # Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
-   # aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
-   set -x HTTP_PROXY  $PROXY
-   set -x HTTPS_PROXY $PROXY
+   switch (uname)
+   case 'Darwin*' # on mac
+      string match '192.*' (getipv4adr)
+      if test $status -eq 0 # private network
+          ; # do nothing
+      else # company network
+         # cygwinでaws使うなら有効にしておいた方がよいかも... bashから引き継がれているように見える？
+	 # Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
+	 # aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
+	 set -x HTTP_PROXY  $PROXY
+	 set -x HTTPS_PROXY $PROXY
 
-   # for wget, wget use enviroment variable with small character, not big one
-   # https://qiita.com/nutti/items/4ed09d3d61ccad49069b
-   set -x http_proxy  $PROXY
-   set -x https_proxy $PROXY
-   set -x ftp_proxy   $PROXY
+	 # for wget, wget use enviroment variable with small character, not big one
+	 # https://qiita.com/nutti/items/4ed09d3d61ccad49069b
+	 set -x http_proxy  $PROXY
+	 set -x https_proxy $PROXY
+	 set -x ftp_proxy   $PROXY
+      end
+    case '*'
+         # cygwinでaws使うなら有効にしておいた方がよいかも... bashから引き継がれているように見える？
+	 # Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
+	 # aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
+	 set -x HTTP_PROXY  $PROXY
+	 set -x HTTPS_PROXY $PROXY
+
+	 # for wget, wget use enviroment variable with small character, not big one
+	 # https://qiita.com/nutti/items/4ed09d3d61ccad49069b
+	 set -x http_proxy  $PROXY
+	 set -x https_proxy $PROXY
+	 set -x ftp_proxy   $PROXY
+    end
 end
 
 # for Subversion
