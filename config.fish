@@ -70,6 +70,8 @@ switch (uname)
 
 	## for brew doctor
 	set -x PATH /usr/local/sbin $PATH ^ /dev/null
+    case 'Linux'
+        set -x EDITOR vi
 end
 
 # load private.fish, e.g. proxy...
@@ -78,44 +80,27 @@ if test -f $PRIVATE_FISH_FILE
    source $PRIVATE_FISH_FILE
 end
 
-switch (uname)
-case 'Darwin' # on mac
-case 'Linux'
-    string match '192.*' (getipv4adr) # later need to add ^ /dev/null
+string match '192.*' (getipv4adr) # later need to add ^ /dev/null
+if test $status -eq 0 # private network
+    ## for git, remove section [http] [https] in ~/.gitconfig
+    git config --global --remove-section http
+    git config --global --remove-section https
+else # company network
+    ## cygwinでaws使うなら有効にしておいた方がよいかも... bashから引き継がれているように見える？
+    # Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
+    # aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
+    set -x HTTP_PROXY  $PROXY
+    set -x HTTPS_PROXY $PROXY
 
-    if test $status -eq 0 # private network
-       ## for git proxy
-       git config --global --unset http.proxy
-       git config --global --unset https.proxy
-    else # company network
-        # cygwinでaws使うなら有効にしておいた方がよいかも... bashから引き継がれているように見える？
-	# Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
-	# aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
-	set -x HTTP_PROXY  $PROXY
-	set -x HTTPS_PROXY $PROXY
+    ## for wget, wget use enviroment variable with small character, not big one
+    # https://qiita.com/nutti/items/4ed09d3d61ccad49069b
+    set -x http_proxy  $PROXY
+    set -x https_proxy $PROXY
+    set -x ftp_proxy   $PROXY
 
-	# for wget, wget use enviroment variable with small character, not big one
-	# https://qiita.com/nutti/items/4ed09d3d61ccad49069b
-	set -x http_proxy  $PROXY
-	set -x https_proxy $PROXY
-	set -x ftp_proxy   $PROXY
-
-	## for git proxy
-	git config --global http.proxy  $PROXY
-	git config --global https.proxy $PROXY
-    end
-case '*'
-     # cygwinでaws使うなら有効にしておいた方がよいかも... bashから引き継がれているように見える？
-     # Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
-     # aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
-     set -x HTTP_PROXY  $PROXY
-     set -x HTTPS_PROXY $PROXY
-
-     # for wget, wget use enviroment variable with small character, not big one
-     # https://qiita.com/nutti/items/4ed09d3d61ccad49069b
-     set -x http_proxy  $PROXY
-     set -x https_proxy $PROXY
-     set -x ftp_proxy   $PROXY
+    ## for git, set proxy setting [http] [https] in ~/.gitconfig
+    git config --global http.proxy  $PROXY
+    git config --global https.proxy $PROXY
 end
 
 # for Subversion
