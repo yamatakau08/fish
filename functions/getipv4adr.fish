@@ -1,8 +1,11 @@
 function getipv4adr
     switch (uname)
     case Darwin
-    case Linux
         set ipv4info (ifconfig | grep -e 'inet ' | grep -v '127.0.0.1' | string trim -l | string split ' ')
+	set ipv4adr  $ipv4info[2]
+    case Linux
+        # /sbin/ifconfig should be full path, because ssh login from other machine happen ifconfig command not found.
+        set ipv4info (/sbin/ifconfig | grep -e 'inet ' | grep -v '127.0.0.1' | string trim -l | string split ' ')
 	set ipv4adr  $ipv4info[2]
     case 'MINGW64_NT-*'
         # chcp.com 65001 : utf-8
