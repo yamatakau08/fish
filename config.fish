@@ -34,6 +34,9 @@ switch (uname)
         set -x PATH /mingw32/bin $PATH ^ /dev/null
 	set DPREFIX /c
 	set -x EDITOR vim
+
+	# to suppress warning when execute gem install sqlite3 --platform ruby
+	set -x PATH /c/yama/.gem/ruby/2.6.0/bin $PATH ^ /dev/null
     case 'Darwin*' # on mac
         set -x EDITOR vi
 
