@@ -1,7 +1,7 @@
 # https://qiita.com/TNaruto/items/b2407f5668e15e42bedd
 function apullfile
   switch (uname -s)
-    case 'MINGW64_NT-*'
+    case 'MINGW*'
      set dscmovf //storage/0123-4567/DCIM/100ANDRO/$argv[1]
     case '*'
      set dscmovf /storage/0123-4567/DCIM/100ANDRO/$argv[1]
