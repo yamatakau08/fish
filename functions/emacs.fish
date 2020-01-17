@@ -7,7 +7,7 @@ switch (uname -s)
     case Linux
 #       /usr/local/bin/emacs $argv & # if '&' exists, "emacs -nw" launch as backgroud, it's not good
 	/usr/local/bin/emacs $argv
-    case 'MINGW64_NT-*'
+    case 'MINGW*'
 # https://ayatakesi.github.io/emacs/temp/html/Windows-Startup.html
 # runemacs.exe CAN     execute other commands on mintty
 # emacs.exe    CAN NOT execute other commands on mintty
