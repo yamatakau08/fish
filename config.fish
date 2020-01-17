@@ -5,7 +5,9 @@ switch (uname)
 	# set -x HOME /c/yama # this doesn't effect
 
         set -x PATH /mingw64/bin $PATH ^ /dev/null
+
 	set -x EDITOR vim
+	alias vi='vim'
 
 	# csv make
 	set -x PATH /c/winbin/csvmake/ $PATH ^ /dev/null
@@ -29,11 +31,16 @@ switch (uname)
 	set -x JAVA_HOME    /c/Program\ Files/Java/jdk-12.0.1
 
 	# to display prompt when execute bash from fish
-	set -x MSYS2_PS1 '\h:\W \u\$'
+	set -x MSYS2_PS1 '\h:\W \u\$ '
     case 'MINGW32*'
         set -x PATH /mingw32/bin $PATH ^ /dev/null
 	set DPREFIX /c
+
 	set -x EDITOR vim
+	alias vi='vim'
+
+	# for adb
+	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH ^ /dev/null
 
 	# to suppress warning when execute gem install sqlite3 --platform ruby
 	set -x PATH /c/yama/.gem/ruby/2.6.0/bin $PATH ^ /dev/null
