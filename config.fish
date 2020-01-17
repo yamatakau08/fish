@@ -34,7 +34,6 @@ switch (uname)
 	set -x MSYS2_PS1 '\h:\W \u\$ '
     case 'MINGW32*'
         set -x PATH /mingw32/bin $PATH ^ /dev/null
-	set DPREFIX /c
 
 	set -x EDITOR vim
 	alias vi='vim'
