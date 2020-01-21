@@ -33,7 +33,13 @@ switch (uname)
 	# to display prompt when execute bash from fish
 	set -x MSYS2_PS1 '\h:\W \u\$ '
     case 'MINGW32*'
-        set -x PATH /mingw32/bin $PATH ^ /dev/null
+        # set -x PATH /mingw32/bin /mingw64/bin $PATH ^ /dev/null # add /mingw64/bin for ag.
+	# when add /mingw64/bin for silver search ag from emacs helm-ag
+	# ruby gem sqlite3 puts out error the following
+        # Ignoring sqlite3-1.4.2 because its extensions are not built. Try: gem pristine sqlite3 --version 1.4.2
+	# read_data.rb: stack level too deep (SystemStackError)
+	# It's not good idea to add /mingw64/bin inspite on mingw32 envrironment
+	set -x PATH /mingw32/bin $PATH ^ /dev/null # when add /mingw64/bin, ruy gem sqlite3 doesn't work
 
 	set -x EDITOR vim
 	alias vi='vim'
