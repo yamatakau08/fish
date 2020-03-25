@@ -127,3 +127,5 @@ set -x LESSHISTFILE $HOME/.history/.lesshst
 
 # ~/bin for my bin, plantuml batch file
 set -x PATH ~/bin $PATH ^ /dev/null
+# ~/.config/fish/functions for ascreenrecord.sh
+set -x PATH ~/.config/fish/functions $PATH ^ /dev/null
