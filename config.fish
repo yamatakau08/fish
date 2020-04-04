@@ -97,6 +97,9 @@ end
 
 string match '192.*' (getipv4adr) # later need to add ^ /dev/null
 if test $status -eq 0 # private network
+   set -e HTTP_PROXY
+   set -e HTTPS_PROXY
+   
     ## for git, remove section [http] [https] in ~/.gitconfig
     #  need ^ /dev/null in case of [http] [https] section is none.
     git config --global --remove-section http  ^ /dev/null
