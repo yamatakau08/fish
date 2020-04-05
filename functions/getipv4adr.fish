@@ -16,4 +16,18 @@ function getipv4adr
     end
 
     echo $ipv4adr
+
+    # first octet
+    set foctet (string split . $ipv4adr)
+    # echo $foctet[1]
+
+    # for Match exec in ~/.ssh/config
+    if test "$foctet[1]" = "192"
+        # echo "private"
+        return 1
+    else
+        # echo "non private"
+        return 0 # for executing "Match exec in ~/.ssh/config"
+    end
+
 end

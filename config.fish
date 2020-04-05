@@ -132,3 +132,7 @@ set -x LESSHISTFILE $HOME/.history/.lesshst
 set -x PATH ~/bin $PATH ^ /dev/null
 # ~/.config/fish/functions for ascreenrecord.sh
 set -x PATH ~/.config/fish/functions $PATH ^ /dev/null
+
+# for "Match exec" in ~/.ssh/config
+# refer https://unix.stackexchange.com/a/565266
+set -x SHELL (type -p fish)
