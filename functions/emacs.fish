@@ -14,7 +14,10 @@ switch (uname -s)
 #	/c/msys64/mingw64/bin/runemacs           $argv # emacs self compiled somehow google-translate doesn't work
 #	/c/winbin/emacs-26.2-x86_64/bin/runemacs $argv # use gnu ftp binary
 #	/c/winbin/emacs-26.3-x86_64/bin/runemacs $argv # use gnu ftp binary
-	/mingw64/bin/runemacs $argv # use gnu ftp binary
+#	/mingw64/bin/runemacs $argv
+	runemacs $argv # run each GUI emacs on mingw32/64
+    case 'MSYS*'
+	/bin/emacs $argv # terminal
     case '*'
 	echo "add 'uname' label in ~/.config/fish/functions/emacs.fish"
     end

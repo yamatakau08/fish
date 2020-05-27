@@ -1,7 +1,8 @@
 switch (uname)
     case 'MINGW64*'
-        # MSYS2 MINGW64 shell lauhcer property working folder C:\msys64 is set as a directory when launch
-	# change it to C:\yama
+        # on MSYS2 msys2.exe mingw32/64.exe
+        # to set default directory to your home directory
+	# at property dialog, set working folder "C:\yama" instead of "C:\msys64"
 	# set -x HOME /c/yama # this doesn't effect
 
         set -x PATH /mingw64/bin $PATH ^ /dev/null
@@ -32,6 +33,10 @@ switch (uname)
 
 	# to display prompt when execute bash from fish
 	set -x MSYS2_PS1 '\h:\W \u\$ '
+
+	# for Pandoc
+	set -x PATH /c/Program\ Files/Pandoc $PATH ^ /dev/null
+
     case 'MINGW32*'
         # set -x PATH /mingw32/bin /mingw64/bin $PATH ^ /dev/null # add /mingw64/bin for ag.
 	# when add /mingw64/bin for silver search ag from emacs helm-ag
@@ -49,6 +54,8 @@ switch (uname)
 
 	# to suppress warning when execute gem install sqlite3 --platform ruby
 	set -x PATH /c/yama/.gem/ruby/2.6.0/bin $PATH ^ /dev/null
+    case 'MSYS*'
+
     case 'Darwin*' # on mac
         set -x EDITOR vi
 
