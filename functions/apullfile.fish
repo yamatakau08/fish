@@ -5,7 +5,7 @@ function apullfile
      set dscmovf //storage/0123-4567/DCIM/100ANDRO/$argv[1]
     case '*'
      set dscmovf /storage/0123-4567/DCIM/100ANDRO/$argv[1]
-    end
+  end
 
   # list android devices to use
   adb devices -l
