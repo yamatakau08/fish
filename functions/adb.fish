@@ -4,7 +4,7 @@ function adb
       if test $argv[1] = "shell"
         winpty adb $argv
       else
-        adb $argv
+        command adb $argv
       end
     case '*'
       command adb $argv
