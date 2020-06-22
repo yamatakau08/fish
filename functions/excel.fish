@@ -1,6 +1,6 @@
 function excel
     switch (uname)
-    case 'MINGW64_NT-*'
+    case 'MINGW*'
 	 /C/Program\ Files\ \(x86\)/Microsoft\ Office/root/Office16/EXCEL.EXE & # office 365
     case 'CYGWIN_NT-*' # 6.1,6.3
     	 set file (cygpath -w $argv)
