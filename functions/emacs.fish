@@ -14,8 +14,8 @@ switch (uname -s)
 #	/c/msys64/mingw64/bin/runemacs           $argv # emacs self compiled somehow google-translate doesn't work
 #	/c/winbin/emacs-26.2-x86_64/bin/runemacs $argv # use gnu ftp binary
 #	/c/winbin/emacs-26.3-x86_64/bin/runemacs $argv # use gnu ftp binary
-#	/mingw64/bin/runemacs $argv
-	runemacs $argv # run each GUI emacs on mingw32/64
+#	runemacs $argv # run each GUI emacs on mingw32/64, my a part of helm-anki-browse doesn't work on mingw32
+	/c/winbin/emacs-28.0.50-snapshot-2020-07-05-x86_64/bin/runemacs.exe $argv
     case 'MSYS*'
 	/bin/emacs $argv # terminal
     case '*'
