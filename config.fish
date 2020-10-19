@@ -49,6 +49,9 @@ switch (uname)
 	set -x EDITOR vim
 	alias vi='vim'
 
+	# for aws on Windows program
+	set -x PATH /c/Program\ Files/Amazon/AWSCLI/bin/ $PATH ^ /dev/null
+
 	# for adb
 	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH ^ /dev/null
 
