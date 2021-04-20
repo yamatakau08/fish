@@ -1,7 +1,7 @@
 function adb
   switch (uname -s)
     case 'MINGW*' 'MSYS*'
-      if contains "shell" $argv
+      if test $argv[-1] = "shell"
         winpty adb $argv
       else
         command adb $argv

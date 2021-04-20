@@ -1,7 +1,7 @@
 # https://qiita.com/TNaruto/items/b2407f5668e15e42bedd
 function ascreenrecord
   switch (uname -s)
-    case 'MINGW64_NT-*'
+    case 'MINGW*' 'MSYS*'
       set mp4f //sdcard/Download/screenrecord.mp4
     case '*'
       set mp4f  /sdcard/Download/screenrecord.mp4
