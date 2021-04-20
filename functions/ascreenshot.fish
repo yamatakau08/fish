@@ -15,5 +15,5 @@ function ascreenshot
   echo $pngf
   adb -t $tid shell screencap -p $pngf
   adb -t $tid pull  $pngf $argv[1] # if $argv[1] is not specified, png file name is pulled is xml
-  adb -t $tid shell rm $pngf
+  adb -t $tid shell rm $pngf # remove screen shot file in device
 end

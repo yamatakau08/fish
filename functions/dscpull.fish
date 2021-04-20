@@ -1,36 +1,35 @@
-# https://qiita.com/TNaruto/items/b2407f5668e15e42bedd
-# //sdcard/DCIM/100ANDRO/DSC_0005.JPG adb_connector_repair.jpg
+# This script pulls dsc or mp4 file which are taken by device
 
 function dscpull
-  set num_devices (adb devices -l | wc -l)
-  set num_devices (math $num_devices - 2)
-
-  switch (uname -s)
-    case 'MINGW*'
-     # SDCARD
-     set sddscf //storage/0123-4567/DCIM/100ANDRO/$argv[1] # Xperia XZs
-     set sddscf //storage/0123-4567/DCIM/Camera/$argv[1]   # Moto g30
-     # internal
-     set iddscf //sdcard/DCIM/100ANDRO/$argv[1] # Xperia XZs
-
-    case '*'
-     # SDCARD
-     set dscmovf /storage/0123-4567/DCIM/100ANDRO/$argv[1]
-     # internal
-     set iddscf  /sdcard/DCIM/100ANDRO/$argv[1]
-    end
-
-  # list android devices to use
+  # list android devices to get the dsc file
   adb devices -l
 
   read -P "select transport_id: " tid
+
+  # get ro.product.model for specifying DSC path
+  set model (adb -t $tid shell "getprop ro.product.model" 2> /dev/null)
+
+  switch $model
+    case 'SOV35*' # Xperia XZs
+      set sddscf //storage/0123-4567/DCIM/100ANDRO/$argv[1]
+      set iddscf //sdcard/DCIM/100ANDRO/$argv[1]
+    case 'moto g(30)*'
+      set sddscf //storage/0123-4567/DCIM/Camera/$argv[1]
+      set iddscf //sdcard/DCIM/100ANDRO/$argv[1] # since I use only external sd card,not yet checked
+    case '*'
+      echo "$model is not supported!"
+      return
+  end
 
   # check if the file is in external sdcard
   adb -t $tid shell ls $sddcsf &> /dev/null
 
   if test $status -eq 0
-    adb -t $tid pull $sddscf $argv[2]
+    set dscf $sddscf
   else
-    adb -t $tid pull $iddscf $argv[2]
+    set dscf $iddscf
   end
+
+  adb -t $tid pull $dscf $argv[2]
+
 end
