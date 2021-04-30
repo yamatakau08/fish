@@ -149,3 +149,5 @@ set -x PATH ~/.config/fish/functions $PATH ^ /dev/null
 # for "Match exec" in ~/.ssh/config
 # refer https://unix.stackexchange.com/a/565266
 set -x SHELL (type -p fish)
+
+alias ls='ls -alF'
