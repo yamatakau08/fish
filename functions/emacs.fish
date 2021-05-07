@@ -7,7 +7,7 @@ switch (uname -s)
     case Linux
 #       /usr/local/bin/emacs $argv & # if '&' exists, "emacs -nw" launch as backgroud, it's not good
 	/usr/local/bin/emacs $argv
-    case 'MINGW*'
+    case 'MINGW*' 'MSYS*'
 # https://ayatakesi.github.io/emacs/temp/html/Windows-Startup.html
 # runemacs.exe CAN     execute other commands on mintty
 # emacs.exe    CAN NOT execute other commands on mintty
@@ -17,8 +17,6 @@ switch (uname -s)
 #	runemacs $argv # run each GUI emacs on mingw32/64, my a part of helm-anki-browse doesn't work on mingw32
 #	/c/winbin/emacs-28.0.50-snapshot-2020-07-05-x86_64/bin/runemacs.exe $argv
 	/c/winbin/emacs-28.0.50/x86_64/bin/runemacs.exe $argv
-    case 'MSYS*'
-	/bin/emacs $argv # terminal
     case '*'
 	echo "add 'uname' label in ~/.config/fish/functions/emacs.fish"
     end

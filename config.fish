@@ -44,7 +44,7 @@ switch (uname)
         # Ignoring sqlite3-1.4.2 because its extensions are not built. Try: gem pristine sqlite3 --version 1.4.2
 	# read_data.rb: stack level too deep (SystemStackError)
 	# It's not good idea to add /mingw64/bin inspite on mingw32 envrironment
-	set -x PATH /mingw32/bin $PATH ^ /dev/null # when add /mingw64/bin, ruy gem sqlite3 doesn't work
+	set -x PATH /mingw64/bin $PATH ^ /dev/null # when add /mingw64/bin, ruby gem sqlite3 doesn't work
 
 	set -x EDITOR vim
 	alias vi='vim'
@@ -61,6 +61,7 @@ switch (uname)
     case 'MSYS*'
 	# for adb
 	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH ^ /dev/null
+	set -x PATH /c/msys64/mingw32/bin $PATH ^ /dev/null # when add /mingw32/bin, silver search ag
 
     case 'Darwin*' # on mac
         set -x EDITOR vi
@@ -151,3 +152,6 @@ set -x PATH ~/.config/fish/functions $PATH ^ /dev/null
 set -x SHELL (type -p fish)
 
 alias ls='ls -alF'
+
+# color
+set -g fish_color_command white
