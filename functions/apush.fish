@@ -1,6 +1,6 @@
 function apush
   switch (uname -s)
-    case 'MINGW64_NT-*'
+    case 'MINGW64_NT-*' 'MINGW32_NT-*'
       set download //sdcard/Download/
     case '*'
       set download /sdcard/Download/
