@@ -9,19 +9,17 @@ function ascreenshot
   read -P "select transport_id: " tid
 
   # get ro.product.model for specifying DSC path
-  set model (adb -t $tid shell "getprop ro.product.model" 2> /dev/null)
+  set tmodel (adb -t $tid shell "getprop ro.product.model" 2> /dev/null)
+  set model (string trim -c '' $tmodel) # important to strip ^M
 
   # check if model is supported
   set pngf screenshot.png
 
   switch $model
-    case 'SOV35*' # Xperia XZs
+    case 'SOV35' 'moto g(30)'
       set dpngf //sdcard/Download/$pngf
-    case 'moto g(30)*'
-      echo "$model is not supported!"
-      return
     case '*'
-      echo "$model is not supported!"
+      echo $model is not supported
       return
   end
 
