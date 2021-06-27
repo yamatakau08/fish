@@ -10,14 +10,14 @@ function ascreenshot
 
   # get ro.product.model for specifying DSC path
   set tmodel (adb -t $tid shell "getprop ro.product.model" 2> /dev/null)
-  set model (string trim -c '' $tmodel) # important to strip ^M
+  set model  (string trim -c '' $tmodel) # important to strip ^M
 
   # check if model is supported
   set pngf screenshot.png
 
   switch $model
     case 'SOV35' 'moto g(30)'
-      set dpngf //sdcard/Download/$pngf
+      set dpngf //sdcard/Download/$pngf # // on MSYS2 environment, but available on Darwin...
     case '*'
       echo $model is not supported
       return
@@ -30,8 +30,16 @@ function ascreenshot
 
   # view the file pulled
   if test -z $argv[-1]
-    start $pngf
+    set sfile $pngf
   else
-    start $argv[-1]
+    set sfile $argv[-1]
+  end
+
+  # open the file
+  switch (uname)
+    case 'Darwin'
+      open  $sfile
+    case '*'
+      start $sfile
   end
 end
