@@ -116,8 +116,9 @@ if test $status -eq 0 # private network
 
     ## for git, remove section [http] [https] in ~/.gitconfig
     #  need ^ /dev/null in case of [http] [https] section is none.
-    git config --global --remove-section http  ^ /dev/null
-    git config --global --remove-section https ^ /dev/null
+    git config --global --remove-section http  2> /dev/null
+    git config --global --remove-section https 2> /dev/null
+
 else # company network
     ## cygwinでaws使うなら有効にしておいた方がよいかも... bashから引き継がれているように見える？
     # Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
