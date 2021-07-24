@@ -103,7 +103,7 @@ switch (uname)
         set -x EDITOR vi
 end
 
-# load private.fish, e.g. proxy...
+# once load private.fish, e.g. proxy...
 set PRIVATE_FISH_FILE $HOME/.config/fish/private.fish
 if test -f $PRIVATE_FISH_FILE
    source $PRIVATE_FISH_FILE
@@ -111,8 +111,9 @@ end
 
 string match '192.*' (getipv4adr) # later need to add ^ /dev/null
 if test $status -eq 0 # private network
-    #set -e HTTP_PROXY
-    #set -e HTTPS_PROXY
+    # unexport environment which is set the above
+    set --unexport HTTP_PROXY
+    set --unexport HTTPS_PROXY
 
     ## for git, remove section [http] [https] in ~/.gitconfig
     #  need ^ /dev/null in case of [http] [https] section is none.
