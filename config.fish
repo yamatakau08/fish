@@ -157,3 +157,7 @@ alias ls='ls -alF'
 
 # color
 set -g fish_color_command white
+
+## Since Msys 3.2.0-340.x86_64 can't handle the home directory field in /etc/passwd, move home directory explicitly.
+cd $HOME
+
