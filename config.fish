@@ -5,22 +5,22 @@ switch (uname)
 	# at property dialog, set working folder "C:\yama" instead of "C:\msys64"
 	# set -x HOME /c/yama # this doesn't effect
 
-        set -x PATH /mingw64/bin $PATH ^ /dev/null
+        set -x PATH /mingw64/bin $PATH 2> /dev/null
 
 	set -x EDITOR vim
 	alias vi='vim'
 
 	# csv make
-	set -x PATH /c/winbin/csvmake/ $PATH ^ /dev/null
+	set -x PATH /c/winbin/csvmake/ $PATH 2> /dev/null
 
 	# for aws on Windows program
-	set -x PATH /c/Program\ Files/Amazon/AWSCLI/bin/ $PATH ^ /dev/null
+	set -x PATH /c/Program\ Files/Amazon/AWSCLI/bin/ $PATH 2> /dev/null
 
 	# for adb
-	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH ^ /dev/null
+	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH 2> /dev/null
 
 	# jdk on Windows program
-	set -x PATH /c/Program\ Files/Java/jdk-12.0.1/bin $PATH ^ /dev/null
+	set -x PATH /c/Program\ Files/Java/jdk-12.0.1/bin $PATH 2> /dev/null
 
 	## for appium
 	set -x NO_PROXY localhost
@@ -35,33 +35,33 @@ switch (uname)
 	set -x MSYS2_PS1 '\h:\W \u\$ '
 
 	# for Pandoc
-	set -x PATH /c/Program\ Files/Pandoc $PATH ^ /dev/null
+	set -x PATH /c/Program\ Files/Pandoc $PATH 2> /dev/null
 
     case 'MINGW32*'
-        # set -x PATH /mingw32/bin /mingw64/bin $PATH ^ /dev/null # add /mingw64/bin for ag.
+        # set -x PATH /mingw32/bin /mingw64/bin $PATH 2> /dev/null # add /mingw64/bin for ag.
 	# when add /mingw64/bin for silver search ag from emacs helm-ag
 	# ruby gem sqlite3 puts out error the following
         # Ignoring sqlite3-1.4.2 because its extensions are not built. Try: gem pristine sqlite3 --version 1.4.2
 	# read_data.rb: stack level too deep (SystemStackError)
 	# It's not good idea to add /mingw64/bin inspite on mingw32 envrironment
-	set -x PATH /mingw64/bin $PATH ^ /dev/null # when add /mingw64/bin, ruby gem sqlite3 doesn't work
+	set -x PATH /mingw64/bin $PATH 2> /dev/null # when add /mingw64/bin, ruby gem sqlite3 doesn't work
 
 	set -x EDITOR vim
 	alias vi='vim'
 
 	# for aws on Windows program
-	set -x PATH /c/Program\ Files/Amazon/AWSCLI/bin/ $PATH ^ /dev/null
+	set -x PATH /c/Program\ Files/Amazon/AWSCLI/bin/ $PATH 2> /dev/null
 
 	# for adb
-	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH ^ /dev/null
+	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH 2> /dev/null
 
 	# to suppress warning when execute gem install sqlite3 --platform ruby
-	set -x PATH /c/yama/.gem/ruby/2.6.0/bin $PATH ^ /dev/null
+	set -x PATH /c/yama/.gem/ruby/2.6.0/bin $PATH 2> /dev/null
 
     case 'MSYS*'
 	# for adb
-	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH ^ /dev/null
-	set -x PATH /c/msys64/mingw32/bin $PATH ^ /dev/null # when add /mingw32/bin, silver search ag
+	set -x PATH /c/winbin/Android/Sdk/platform-tools $PATH 2> /dev/null
+	set -x PATH /c/msys64/mingw32/bin $PATH 2> /dev/null # when add /mingw32/bin, silver search ag
 
     case 'Darwin*' # on mac
         set -x EDITOR vi
@@ -69,20 +69,20 @@ switch (uname)
 	### for appium
 	# for adb
 	set -x ANDROID_HOME ~/Library/Android/sdk
-	set -x PATH $ANDROID_HOME/platform-tools $PATH ^ /dev/null
-	set -x PATH $ANDROID_HOME/tools $PATH ^ /dev/null
+	set -x PATH $ANDROID_HOME/platform-tools $PATH 2> /dev/null
+	set -x PATH $ANDROID_HOME/tools $PATH 2> /dev/null
 
 	# for java
 	#set -x JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/A/Commands
 	#set -x JAVA_HOME /usr/libexec/java_home
-	#set -x PATH $JAVA_HOME $PATH ^ /dev/null
+	#set -x PATH $JAVA_HOME $PATH 2> /dev/null
 
 
 	# to supress openssl error message when brew upgrade ruby-build on Mac
-	set -x PATH /usr/local/opt/openssl/bin $PATH ^ /dev/null
+	set -x PATH /usr/local/opt/openssl/bin $PATH 2> /dev/null
 
 	# for ruby bundler ...
-	#set -x PATH $HOME/.gem/ruby/2.3.0/bin $PATH ^ /dev/null
+	#set -x PATH $HOME/.gem/ruby/2.3.0/bin $PATH 2> /dev/null
 	# rbenv
 	rbenv init - | source
 
@@ -93,12 +93,12 @@ switch (uname)
 	# to suppress
 	# set: Warning: $PATH entry is not valid
 	# refer https://github.com/fish-shell/fish-shell/issues/4197#issuecomment-313870104
-	# use ^ /dev/null when set $PATH
+	# use 2> /dev/null when set $PATH
 	# amazon web service
-	set -x PATH ~/.local/bin $PATH ^ /dev/null
+	set -x PATH ~/.local/bin $PATH 2> /dev/null
 
 	## for brew doctor
-	set -x PATH /usr/local/sbin $PATH ^ /dev/null
+	set -x PATH /usr/local/sbin $PATH 2> /dev/null
     case 'Linux'
         set -x EDITOR vi
 end
@@ -109,14 +109,14 @@ if test -f $PRIVATE_FISH_FILE
    source $PRIVATE_FISH_FILE
 end
 
-string match '192.*' (getipv4adr) # later need to add ^ /dev/null
+string match '192.*' (getipv4adr) # later need to add 2> /dev/null
 if test $status -eq 0 # private network
     # unexport environment which is set the above
     set --unexport HTTP_PROXY
     set --unexport HTTPS_PROXY
 
     ## for git, remove section [http] [https] in ~/.gitconfig
-    #  need ^ /dev/null in case of [http] [https] section is none.
+    #  need 2> /dev/null in case of [http] [https] section is none.
     git config --global --remove-section http  2> /dev/null
     git config --global --remove-section https 2> /dev/null
 
@@ -145,9 +145,9 @@ set -x SVN_EDITOR $EDITOR
 set -x LESSHISTFILE $HOME/.history/.lesshst
 
 # ~/bin for my bin, plantuml batch file
-set -x PATH ~/bin $PATH ^ /dev/null
+set -x PATH ~/bin $PATH 2> /dev/null
 # ~/.config/fish/functions for ascreenrecord.sh
-set -x PATH ~/.config/fish/functions $PATH ^ /dev/null
+set -x PATH ~/.config/fish/functions $PATH 2> /dev/null
 
 # for "Match exec" in ~/.ssh/config
 # refer https://unix.stackexchange.com/a/565266
