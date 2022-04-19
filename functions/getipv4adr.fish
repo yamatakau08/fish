@@ -13,7 +13,13 @@ function getipv4adr
 	set ipv4adr  $ipv4info[-1]
 	# During network is connecting Cisco Any Connect, イーサネット アダプター イーサネット2 IP first octet is 137
 	set ipv4adrs (/c/Windows/System32/chcp.com 65001 | ipconfig | grep -e 'IPv4' | string match -r '\d+\.\d+\.\d+\.\d+')
-    case '*'
+    case 'CYGWIN_NT*'
+        # chcp.com 65001 : utf-8
+        set ipv4info (/cygdrive/c/Windows/System32/chcp.com 65001 | ipconfig | grep -e 'IPv4' | string split ' ')
+	set ipv4adr  $ipv4info[-1]
+	# During network is connecting Cisco Any Connect, イーサネット アダプター イーサネット2 IP first octet is 137
+	set ipv4adrs (/cygdrive/c/Windows/System32/chcp.com 65001 | ipconfig | grep -e 'IPv4' | string match -r '\d+\.\d+\.\d+\.\d+')
+   case '*'
         echo "add 'uname' label in ~/.config/fish/functions/networkchk.fish"
 	return 1
     end
