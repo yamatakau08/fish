@@ -1,4 +1,9 @@
 switch (uname)
+    case 'CYGWIN*'
+	# for adb platform tool
+	# Since inherit Windows PATH environment, no need to set
+	#set -x PATH /cygdrive/c/Users/0000910700/AppData/Local/Android/Sdk/platform-tools $PATH 2> /dev/null
+
     case 'MINGW64*'
         # on MSYS2 msys2.exe mingw32/64.exe
         # to set default directory to your home directory
@@ -160,4 +165,3 @@ set -g fish_color_command white
 
 ## Since Msys 3.2.0-340.x86_64 can't handle the home directory field in /etc/passwd, move home directory explicitly.
 cd $HOME
-

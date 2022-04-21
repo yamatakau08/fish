@@ -1,7 +1,7 @@
 function emacs
     switch (uname -s)
 	case 'CYGWIN_NT-*' # 6.1,6.3
-	    command /cygdrive/c/winbin/emacs-26.1-x86_64/bin/emacs.exe $argv & # deps version
+	    /cygdrive/c/winbin/emacs-29.0.50-snapshot/bin/runemacs.exe $argv
 	case Darwin
 	    /Applications/Emacs.app/Contents/MacOS/Emacs $argv &
 	case Linux
