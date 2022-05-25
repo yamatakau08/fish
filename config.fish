@@ -112,6 +112,8 @@ end
 set PRIVATE_FISH_FILE $HOME/.config/fish/private.fish
 if test -f $PRIVATE_FISH_FILE
    source $PRIVATE_FISH_FILE
+else
+   echo "no private fish!"
 end
 
 string match '192.*' (getipv4adr) # later need to add 2> /dev/null
