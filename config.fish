@@ -158,6 +158,7 @@ set -x PATH ~/.config/fish/functions $PATH 2> /dev/null
 # refer https://unix.stackexchange.com/a/565266
 set -x SHELL (type -p fish)
 
+alias cls='clear'
 alias ls='ls -alF'
 
 # color
