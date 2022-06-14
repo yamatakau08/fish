@@ -36,7 +36,7 @@ function ascreenshot
 
     # open the file
     switch (uname)
-	case 'Darwin'
+	case 'Darwin' 'CYGWIN*'
 	    open  $lpngf
 	case '*'
 	    start $lpngf
