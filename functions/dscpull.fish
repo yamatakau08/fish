@@ -22,7 +22,7 @@ function dscpull
   end
 
   # check if the file is in external sdcard
-  adb -t $tid shell ls $sddcsf 2> /dev/null
+  adb -t $tid shell ls $sddcsf 1> /dev/null
 
   if test $status -eq 0
     set dscf $sddscf
