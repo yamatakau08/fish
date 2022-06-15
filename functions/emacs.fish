@@ -1,12 +1,13 @@
 function emacs
     switch (uname -s)
-	case 'CYGWIN_NT-*' # 6.1,6.3
-	    /cygdrive/c/winbin/emacs-29.0.50-snapshot/bin/runemacs.exe $argv
+	case 'CYGWIN*'
+	    c:/winbin/emacs-29.0.50-snapshot/bin/runemacs.exe $argv &
+            #c:/winbin/emacs-28.0.50-snapshot/bin/runemacs.exe $argv &
 	case Darwin
 	    /Applications/Emacs.app/Contents/MacOS/Emacs $argv &
 	case Linux
 	    #       /usr/local/bin/emacs $argv & # if '&' exists, "emacs -nw" launch as backgroud, it's not good
-	    /usr/local/bin/emacs $argv
+	    /usr/local/bin/emacs $argv &
 	case 'MINGW*' 'MSYS*'
 	    # https://ayatakesi.github.io/emacs/temp/html/Windows-Startup.html
 	    # After launch runemacs.exe on mintty, CAN     execute other commands on mintty
