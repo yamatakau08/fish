@@ -6,7 +6,15 @@ adb devices -l
 echo -n "select transport_id: "
 read tid
 
-dmp4f="//sdcard/Download/screenrecord.mp4"
+case $(uname) in
+    "MSYS*" | "MINGW*" )
+	dmp4f="//sdcard/Download/screenrecord.mp4"
+	;;
+    *)
+	dmp4f="/sdcard/Download/screenrecord.mp4"
+	;;
+esac
+
 ## ${mp4f##*.}
 ## https://stackoverflow.com/a/3298229
 lmpf4="$(basename $dmp4f .mp4)_$(date +%y%m%d_%H%M%S).${dmp4f##*.}"
