@@ -1,8 +1,7 @@
 function emacs
     switch (uname -s)
 	case 'CYGWIN*'
-	    c:/winbin/emacs-29.0.50-snapshot/bin/runemacs.exe $argv &
-            #c:/winbin/emacs-28.0.50-snapshot/bin/runemacs.exe $argv &
+	    /cygdrive/c/winbin/emacs-29.0.50-snapshot/bin/runemacs.exe $argv &
 	case Darwin
 	    /Applications/Emacs.app/Contents/MacOS/Emacs $argv &
 	case Linux
