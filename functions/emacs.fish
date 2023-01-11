@@ -6,7 +6,7 @@ function emacs
 	    /Applications/Emacs.app/Contents/MacOS/Emacs $argv &
 	case Linux
 	    #       /usr/local/bin/emacs $argv & # if '&' exists, "emacs -nw" launch as backgroud, it's not good
-	    /usr/local/bin/emacs $argv &
+	    /usr/bin/emacs $argv &
 	case 'MINGW*' 'MSYS*'
 	    # https://ayatakesi.github.io/emacs/temp/html/Windows-Startup.html
 	    # After launch runemacs.exe on mintty, CAN     execute other commands on mintty
