@@ -4,9 +4,9 @@ function getipv4adr
         set ipv4info (ifconfig | grep -e 'inet ' | grep -v '127.0.0.1' | string trim -l | string split ' ')
 	set ipv4adrs  $ipv4info[2]
     case Linux
-        # /sbin/ifconfig should be full path, because ssh login from other machine happen ifconfig command not found.
-        set ipv4info (/sbin/ifconfig | grep -e 'inet ' | grep -v '127.0.0.1' | string trim -l | string split ' ')
-	set ipv4adrs  $ipv4info[2]
+        set ipv4info (ip -4 -br -o -f inet address show dev eno1 | string trim -r | string split ' ')
+	set ipv4adrs (echo $ipv4info[-1] | string split /) # split / means remove netmask
+	set ipv4adrs $ipv4adrs[1]
     case 'MINGW*' 'MSYS*'
         # chcp.com 65001 : utf-8
         set ipv4info (/c/Windows/System32/chcp.com 65001 | ipconfig | grep -e 'IPv4' | string split ' ')
