@@ -105,7 +105,7 @@ switch (uname)
 	## for brew doctor
 	set -x PATH /usr/local/sbin $PATH 2> /dev/null
     case 'Linux'
-        set -x EDITOR vi
+        set -x EDITOR vim
 end
 
 # once load private.fish, e.g. proxy...
