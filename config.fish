@@ -106,6 +106,7 @@ switch (uname)
 	set -x PATH /usr/local/sbin $PATH 2> /dev/null
     case 'Linux'
         set -x EDITOR vim
+	alias vi='vim'
 end
 
 # once load private.fish, e.g. proxy...
