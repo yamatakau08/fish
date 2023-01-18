@@ -133,12 +133,15 @@ else # company network
     # Windowsの環境変数で設定したのが引きつがれているので、上の設定だけでも動く
     # aws refer https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-http-proxy.html
     set -x HTTP_PROXY  $PROXY
-    set -x HTTPS_PROXY $PROXY
+    ## comment HTTPS_PROXY
+    # curl backend of use-package use this environment variable,
+    # (url-retrieve-synchronously "https://orgmode.org/elpa/archive-contents") take much time to finish
+    # set -x HTTPS_PROXY $PROXY
 
     ## for wget, wget use enviroment variable with small character, not big one
     # https://qiita.com/nutti/items/4ed09d3d61ccad49069b
     set -x http_proxy  $PROXY
-    set -x https_proxy $PROXY
+    # set -x https_proxy $PROXY # see HTTPS_PROXY comment is above.
     set -x ftp_proxy   $PROXY
 
     ## for git, set proxy setting [http] [https] in ~/.gitconfig
