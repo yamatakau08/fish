@@ -4,6 +4,8 @@ switch (uname)
 	# Since inherit Windows PATH environment, no need to set
 	#set -x PATH /cygdrive/c/Users/0000910700/AppData/Local/Android/Sdk/platform-tools $PATH 2> /dev/null
 
+	set -x NO_PROXY localhost # for anki,anki-connect
+
     case 'MINGW64*'
         # on MSYS2 msys2.exe mingw32/64.exe
         # to set default directory to your home directory
