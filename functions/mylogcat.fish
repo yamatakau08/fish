@@ -1,9 +1,9 @@
 function mylogcat
     set ruby_script ~/bin/ptools/mylogcat/mylogcat.rb
     switch (uname)
-	case Darwin
+	case 'Darwin' 'CYGWIN*'
 	    ruby $ruby_script $argv
-	case *
+	case 'MSYS*'
 	    winpty ruby $ruby_script $argv
     end
 end
