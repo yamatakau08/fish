@@ -11,6 +11,9 @@ function dpversion
       set tid (string trim -c '\n' $deviceinfo[-1])
   else if test "$numdevices" -ge 2
       read -P "select transport_id: " tid
+  else
+      echo "No avilable devices"
+      return
   end
 
   # adb shell getprop 複数指定はできないので、個別で

@@ -27,6 +27,11 @@ function func_trap
     adb -t $tid pull $dmp4f $lmpf4
 }
 
+## once delete dmp4, because if dmp4 exists, screenrecord fails
+adb -t $tid shell rm -f $dmp4f # -f suppress error message if $dmp4f doesn't exist
+
 ##
 echo "start screenrecord to $lmpf4"
-adb -t $tid shell screenrecord $dmp4f
+adb -t $tid shell screenrecord $dmp4f # --time-limit TIME exists, maximum is 180
+echo "pulling $lmpf4"
+adb -t $tid pull $dmp4f $lmpf4

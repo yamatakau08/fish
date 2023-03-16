@@ -3,7 +3,8 @@ function emacs
 	case 'CYGWIN*'
 	    #/cygdrive/c/winbin/emacs-29.0.50-snapshot/bin/runemacs.exe $argv &
 	    #/cygdrive/c/winbin/emacs-28.0.91/bin/runemacs.exe $argv &
-	    /cygdrive/c/winbin/emacs-28.1.90/bin/runemacs.exe $argv &
+	    #/cygdrive/c/winbin/emacs-28.1.90/bin/runemacs.exe $argv &
+	    /cygdrive/c/winbin/emacs-29.0.60/bin/runemacs.exe $argv &
 	case Darwin
 	    /Applications/Emacs.app/Contents/MacOS/Emacs $argv &
 	case Linux
