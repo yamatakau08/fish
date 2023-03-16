@@ -157,6 +157,9 @@ set -x SVN_EDITOR $EDITOR
 # for less
 set -x LESSHISTFILE $HOME/.history/.lesshst
 
+# for hunspell
+set -x DICPATH $HOME/.emacs.d/myspell
+
 # ~/bin for my bin, plantuml batch file
 set -x PATH ~/bin $PATH 2> /dev/null
 # ~/.config/fish/functions for ascreenrecord.sh
