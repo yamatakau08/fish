@@ -1,11 +1,13 @@
 function emacs
     set nw false
     ## check if "-nw" option is specified
-    for i in (seq (count $argv))
-	#echo -n $argv[$i]
-	if test (string match -- "-nw" $argv[$i])
-	    set nw true
-	    break
+    if test 0 -ne (count $argv)
+	for i in (seq (count $argv))
+	    #echo -n $argv[$i]
+	    if test (string match -- "-nw" $argv[$i])
+		set nw true
+		break
+	    end
 	end
     end
 
