@@ -29,7 +29,7 @@ function emacs
 	    end
 	case Linux
 	    if test $nw
-		/usr/bin/emacs $argv &
+		/usr/bin/emacs $argv
 	    else
 		/usr/bin/emacs $argv &
 	    end
