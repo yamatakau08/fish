@@ -18,19 +18,19 @@ function emacs
 	# After launch emacs.exe    on mintty, CAN NOT execute other commands on mintty
 
 	case 'CYGWIN*'
-	    if test $nw
+	    if $nw -eq true
 		/cygdrive/c/winbin/emacs-29.0.60/bin/emacs.exe $argv
 	    else
 		/cygdrive/c/winbin/emacs-29.0.60/bin/runemacs.exe $argv &
 	    end
 	case Darwin
-	    if test $nw
+	    if $nw -eq true
 		/Applications/Emacs.app/Contents/MacOS/Emacs $argv
 	    else
 		/Applications/Emacs.app/Contents/MacOS/Emacs $argv &
 	    end
 	case Linux
-	    if test $nw
+	    if $nw -eq true
 		/usr/bin/emacs $argv
 	    else
 		/usr/bin/emacs $argv &
@@ -38,7 +38,7 @@ function emacs
 	case 'MINGW*' 'MSYS*'
 	    #	/c/msys64/mingw64/bin/runemacs $argv # emacs self compiled somehow google-translate doesn't work
 	    #	runemacs $argv                       # run each GUI emacs on mingw32/64, my a part of helm-anki-browse doesn't work on mingw32
-	    if test $nw
+	    if $nw -eq true
 		/c/winbin/emacs-29.0.50-snapshot/bin/runemacs.exe $argv
 	    else
 		/c/winbin/emacs-29.0.50-snapshot/bin/runemacs.exe $argv &
