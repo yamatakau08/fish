@@ -19,6 +19,7 @@ function emacs
 
 	case 'CYGWIN*'
 	    if $nw -eq true
+		clear
 		/cygdrive/c/winbin/emacs-29.0.60/bin/emacs.exe $argv
 	    else
 		/cygdrive/c/winbin/emacs-29.0.60/bin/runemacs.exe $argv &
