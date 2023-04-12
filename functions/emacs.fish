@@ -16,13 +16,13 @@ function emacs
 	# https://ayatakesi.github.io/emacs/temp/html/Windows-Startup.html
 	# After launch runemacs.exe on mintty, CAN     execute other commands on mintty
 	# After launch emacs.exe    on mintty, CAN NOT execute other commands on mintty
-
+	
 	case 'CYGWIN*'
 	    if $nw -eq true
 		clear
-		/cygdrive/c/winbin/emacs-29.0.60/bin/emacs.exe $argv
+		/cygdrive/c/winbin/emacs-30.0.50/bin/emacs.exe $argv
 	    else
-		/cygdrive/c/winbin/emacs-29.0.60/bin/runemacs.exe $argv &
+		/cygdrive/c/winbin/emacs-30.0.50/bin/runemacs.exe $argv &
 	    end
 	case Darwin
 	    if $nw -eq true
