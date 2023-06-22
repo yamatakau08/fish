@@ -16,7 +16,7 @@ function emacs
 	# https://ayatakesi.github.io/emacs/temp/html/Windows-Startup.html
 	# After launch runemacs.exe on mintty, CAN     execute other commands on mintty
 	# After launch emacs.exe    on mintty, CAN NOT execute other commands on mintty
-	
+
 	case 'CYGWIN*'
 	    if $nw -eq true
 		clear

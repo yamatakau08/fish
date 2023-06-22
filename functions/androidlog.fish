@@ -1,25 +1,16 @@
-# This script gets the android device's logcat log
 function androidlog
-  # list android devices
-  adb devices -l
+    argparse s/serialno -- $argv
 
-  read -P "select transport_id: " tid
+    set timestamp (date "+%Y%m%d_%H%M%S")
 
-  # get ro.product.model for specifying DSC path
-  set model (adb -t $tid shell "getprop ro.product.model" 2> /dev/null)
+    if set -ql _flag_serialno
+	set sno $argv[1]
+	adb -s $sno shell logcat | tee "android_"$timestamp"_logcat.log"
+    else
+	adb devices -l
 
-  switch $model
-    case 'SOV35*' # Xperia XZs
-      set sddscf //storage/0123-4567/DCIM/100ANDRO
-      set iddscf //sdcard/DCIM/100ANDRO
-    case 'moto g(30)*'
-      set sddscf //storage/0123-4567/DCIM/Camera
-      set iddscf //sdcard/DCIM/100ANDRO
-    case '*'
-      echo "$model is not supported!"
-      return
-  end
+	read -P "select transport_id: " tid
 
-  set timestamp (date "+%Y%m%d_%H%M%S")
-  adb -t $tid shell logcat | tee "android_"$timestamp"_logcat.log"
+	adb -t $tid shell logcat | tee "android_"$timestamp"_logcat.log"
+    end
 end
