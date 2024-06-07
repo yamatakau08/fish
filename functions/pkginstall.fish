@@ -4,8 +4,9 @@
 
 function pkginstall
 
-  set package_name $argv[1] # com.hoge
-  set package_file $argv[2] # apk file name to be installed
+  set option       $argv[1] # com.hoge
+  set package_name $argv[2] # com.hoge
+  set package_file $argv[3] # apk file name to be installed
 
   echo $package_name
   echo $package_file
@@ -15,9 +16,19 @@ function pkginstall
 
   read -P "select transport_id: " tid
 
-  echo "uninstalling... $package_name"
-  adb -t $tid uninstall $package_name 2> /dev/null
+  if test $option = "clean"
+      echo "uninstalling... $package_name"
+      adb -t $tid uninstall $package_name 2> /dev/null
+  end
 
-  echo "installing... $package_name"
-  adb -t $tid install $package_file
+  if test $option = "clean"
+      echo "$option installing... $package_name"
+      adb -t $tid install $package_file
+  else if test $option = "overwrite"
+      echo "$option installing... $package_name"
+      adb -t $tid install -r $package_file
+  else
+      echo "$option is not appropriate!"
+  end
+
 end
