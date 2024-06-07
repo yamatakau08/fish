@@ -7,17 +7,18 @@ function dscls
   read -P "select transport_id: " tid
 
   # get ro.product.model for specifying DSC path
-  set model (adb -t $tid shell "getprop ro.product.model" 2> /dev/null)
+  set xmodel (adb -t $tid shell "getprop ro.product.model" 2> /dev/null)
+  set model (string trim -c '' $xmodel)
 
   switch $model
-    case 'SOV35*' # Xperia XZs
+    case 'SOV35' # Xperia XZs
       set sddscf //storage/0123-4567/DCIM/100ANDRO
       set iddscf //sdcard/DCIM/100ANDRO
-    case 'moto g(30)*'
+    case 'moto g(30)' # 'moto g53j 5G'
       set sddscf //storage/0123-4567/DCIM/Camera
       set iddscf //sdcard/DCIM/100ANDRO
     case '*'
-      echo "$model is not supported!"
+      echo "$model is not supported!, add case condition!"
       return
   end
 
