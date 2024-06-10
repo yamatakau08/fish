@@ -16,7 +16,7 @@ function ascreenshot
     set pngf screenshot.png
 
     switch $model
-	case 'SOV35' 'moto g(30)'
+	case 'SOV35' 'moto g(30)' 'moto g53j 5G'
 	    set dpngf //sdcard/Download/$pngf # // on MSYS2 environment, but available on Darwin...
 	case '*'
 	    echo $model is not supported
