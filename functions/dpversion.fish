@@ -19,6 +19,15 @@ function dpversion
   # adb shell getprop 複数指定はできないので、個別で
   adb -t $tid shell echoprop
 
+  # SeedsCloud prod/staging
+  adb -t $tid shell "nvp zr 096 4"
+  # zr:  read, zr: write
+  # 096: zone(address)
+  # 04: read counts
+  # "00 00 00 00" prod
+  # "00 00 00 01" qa
+
+  echo "00: prod 01: qa"
   echo
 
   ## version.txt
