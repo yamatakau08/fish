@@ -14,7 +14,7 @@ function dscls
     case 'SOV35' # Xperia XZs
       set sddscf //storage/0123-4567/DCIM/100ANDRO
       set iddscf //sdcard/DCIM/100ANDRO
-    case 'moto g(30)' # 'moto g53j 5G'
+    case 'moto g(30)' 'moto g53j 5G'
       set sddscf //storage/0123-4567/DCIM/Camera
       set iddscf //sdcard/DCIM/100ANDRO
     case '*'
@@ -22,13 +22,16 @@ function dscls
       return
   end
 
+  # add screeshot directory
+  set screenf //storage/emulated/0/Pictures/Screenshots
+
   # check if the file is in external sdcard
   adb -t $tid shell ls $sddcsf 1> /dev/null
 
   if test $status -eq 0
-    set dscf $sddscf
+    set dscf $sddscf $screenf
   else
-    set dscf $iddscf
+    set dscf $iddscf $screenf
   end
 
   adb -t $tid shell "ls -l $dscf"

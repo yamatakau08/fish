@@ -22,15 +22,30 @@ function dscpull
       return
   end
 
-  # check if the file is in external sdcard
-  adb -t $tid shell ls $sddcsf 1> /dev/null
-
+  ## check if the file is in screenshot directory
+  # add screeshot directory
+  set screenf //storage/emulated/0/Pictures/Screenshots/$argv[1]
+  adb -t $tid shell ls $screenf 1> /dev/null
   if test $status -eq 0
-    set dscf $sddscf
-  else
-    set dscf $iddscf
+    set dscf $screenf
+    adb -t $tid pull $dscf $argv[2]
+    return
   end
 
-  adb -t $tid pull $dscf $argv[2]
+  ## check if the file is in sdcard directory
+  adb -t $tid shell ls $sddcsf 1> /dev/null
+  if test $status -eq 0
+    set dscf $sddscf
+    adb -t $tid pull $dscf $argv[2]
+    return
+  end
+
+  ## check if the file is in internal dicrectory
+  adb -t $tid shell ls $iddcsf 1> /dev/null
+  if test $status -eq 0
+    set dscf $iddscf
+    adb -t $tid pull $dscf $argv[2]
+    return
+  end
 
 end
