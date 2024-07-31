@@ -4,22 +4,7 @@
 # LG-G82M   INFO: Texture: 888x1920
 # Moto g53J INFO: Texture: 720x1600
 
-function scrcpy
-
-    ## check os type
-    set xuname (uname) > /dev/null
-
-    if string match --ignore-case --regex 'CYGWIN' $xuname
-	set cmdscrcpy ~/OneDrive/archive/scrcpy-win64-v2.4/scrcpy-win64-v2.4/scrcpy.exe
-	set screen_record_dir c:\\yama\\OneDrive\\tmp\\scrcpy_record
-	set screen_record_file $screen_record_dir/$model-(date +'%Y%m%d-%H%M%S').mp4
-    else if string match --ignore-case --regex 'Darwin' $xuname
-	set cmdscrcpy scrcpy
-	set screen_record_dir ~/tmp/scrcpy_record
-	set screen_record_file $screen_record_dir/$model-(date +'%Y%m%d-%H%M%S').mp4
-    else
-	return
-    end
+function xscrcpy
 
     ## list android devices
     adb devices -l
@@ -40,6 +25,22 @@ function scrcpy
 	return
     end
 
+    ## check os type
+    set xuname (uname) > /dev/null
+
+    if string match --ignore-case --regex 'CYGWIN' $xuname
+	set cmdscrcpy ~/OneDrive/archive/scrcpy-win64-v2.4/scrcpy-win64-v2.4/scrcpy.exe
+	set screen_record_dir c:\\yama\\OneDrive\\tmp\\scrcpy_record
+	set screen_record_file $screen_record_dir/$model-(date +'%Y%m%d-%H%M%S').mp4
+    else if string match --ignore-case --regex 'Darwin' $xuname
+	set cmdscrcpy scrcpy
+	set screen_record_dir ~/tmp/scrcpy_record
+	set screen_record_file $screen_record_dir/$model-(date +'%Y%m%d-%H%M%S').mp4
+    else
+	return
+    end
+
+    echo $serialno
     echo record to $screen_record_file
 
     $cmdscrcpy --serial $serialno --video-codec=h264 --max-size=1920 --max-fps=60 --keyboard=uhid --show-touches --record=$screen_record_file --verbosity=verbose
