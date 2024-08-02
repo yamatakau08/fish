@@ -20,6 +20,9 @@ function myscrcpy
     set model (adb -t $tid shell "getprop ro.product.model")
     set model (string trim -c '' $model) # important to strip ^M
 
+    set model (string replace -a ' ' _ $model)
+    set model (string replace -r -a '[()]' '' $model) # to remove the braces. e.g. mogo g(30)
+
     ## check os type
     set xuname (uname)
 
