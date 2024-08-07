@@ -26,7 +26,7 @@ function androidlog
 
 	if test $status -eq 0 # match "command not found"
 	    set model "BISYAMON"
-	    adb -t $tid shell hagocat | tee $model"_android_"$timestamp"_logcat.log"
+	    adb -t $tid shell hagocat | tee $model"_"$timestamp"_hagocat.log"
 	else
 	    set model (string trim -c '' $model) # important to strip ^M
 
