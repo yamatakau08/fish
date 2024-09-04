@@ -17,11 +17,14 @@ function myscrcpy
     set serial_no $serial_no[1]
 
     ## get ro.product.model
-    set model (adb -t $tid shell "getprop ro.product.model")
-    set model (string trim -c '' $model) # important to strip ^M
+    # set model (adb -t $tid shell "getprop ro.product.model")
+    # set model (string trim -c '' $model) # important to strip ^M
 
-    set model (string replace -a ' ' _ $model)
-    set model (string replace -r -a '[()]' '' $model) # to remove the braces. e.g. mogo g(30)
+    # set model (string replace -a ' ' _ $model)
+    # set model (string replace -r -a '[()]' '' $model) # to remove the braces. e.g. mogo g(30)
+    # remove CR=\r=^M (*) , translate space to '-', remove '(' or ')'
+    # (*) dos adb command outputs appended CR=\r=^M
+    set model (adb -t $tid shell "getprop ro.product.model" | sed -e 's/\r//; s/  */-/g; s/[()]//g')
 
     ## check os type
     set xuname (uname)
@@ -48,5 +51,4 @@ function myscrcpy
     $cmdscrcpy --serial $serial_no --video-codec=h264 --max-size=1920 --max-fps=60 --keyboard=uhid --show-touches --record=$screen_record_file --verbosity=verbose
     # --no-audio
     # --window-width 1000 --window-height 2500
-
 end
