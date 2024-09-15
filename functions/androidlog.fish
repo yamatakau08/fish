@@ -1,5 +1,6 @@
 function androidlog
     argparse s/serialno -- $argv
+    or return
 
     set timestamp (date "+%Y%m%d_%H%M%S")
 
@@ -33,7 +34,7 @@ function androidlog
 	    set model (string replace -a ' ' _ $model)
 	    set model (string replace -r -a '[()]' '' $model) # to remove the braces. e.g. mogo g(30)
 
-	    adb -t $tid shell logcat | tee $model"_android_"$timestamp"_logcat.log"
+	    adb -t $tid shell logcat | tee $model"_"$timestamp"_logcat.log"
 	end
     end
 end

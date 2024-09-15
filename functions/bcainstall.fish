@@ -8,7 +8,7 @@ function bcainstall
   if [ $option = "clean" ] || [ $option = "overwrite" ]
       pkginstall $option $package_name $package_file
   else
-      echo "Usage: bcainstall clean|overwrite"
+      echo "Usage: bcainstall clean|overwrite file.apk"
   end
 
 end

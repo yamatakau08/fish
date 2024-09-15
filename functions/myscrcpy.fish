@@ -32,7 +32,9 @@ function myscrcpy
     if string match --ignore-case --regex 'CYGWIN' $xuname
 	set cmdscrcpy ~/OneDrive/archive/scrcpy-win64-v2.4/scrcpy-win64-v2.4/scrcpy.exe
 	set screen_record_dir c:\\yama\\OneDrive\\tmp\\scrcpy_record
+	set screen_record_dir '.'
 	set screen_record_file $screen_record_dir/$model-(date +'%Y%m%d-%H%M%S').mp4
+	echo $screen_record_file
     else if string match --ignore-case --regex 'Darwin' $xuname
 	set cmdscrcpy /usr/local/bin/scrcpy
 	set screen_record_dir ~/tmp/scrcpy_record
@@ -48,7 +50,7 @@ function myscrcpy
     end
 
     ## scrcpy execute
-    $cmdscrcpy --serial $serial_no --video-codec=h264 --max-size=1920 --max-fps=60 --keyboard=uhid --show-touches --record=$screen_record_file --verbosity=verbose
-    # --no-audio
+    $cmdscrcpy --serial $serial_no --video-codec=h264 --max-size=1920 --max-fps=60 --keyboard=uhid --show-touches --record=$screen_record_file --verbosity=verbose --no-audio
+    # --no-audio : Disable audio forwarding.
     # --window-width 1000 --window-height 2500
 end
