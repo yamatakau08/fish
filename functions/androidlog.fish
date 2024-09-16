@@ -1,5 +1,5 @@
 function androidlog
-    argparse h/help s/serial= t/transport_id= -- $argv
+    argparse -x 's,t' h/help s/serial= t/transport_id= -- $argv
     or return
 
     if set -ql _flag_help
