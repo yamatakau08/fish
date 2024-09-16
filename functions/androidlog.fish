@@ -1,40 +1,43 @@
 function androidlog
-    argparse s/serialno -- $argv
+    argparse s/serial h/help -- $argv
     or return
 
-    set timestamp (date "+%Y%m%d_%H%M%S")
+    if set -ql _flag_help
+	echo 'usage [-s|--serial] SERIAL'
+	return 0
+    end
 
-    if set -ql _flag_serialno
-	set sno $argv[1]
-	adb -s $sno shell getprop ro.product.mode
+    if set -ql _flag_serial
+	set mode serial
+	set serial $argv[1]
 
-	set tmodel (adb -s $sno shell "getprop ro.product.model" 2> /dev/null)
-	set model  (string trim -c '' $tmodel) # important to strip ^M
-
-	echo $model
-
-	return
-
-	adb -s $sno shell logcat | tee "android_"$timestamp"_logcat.log"
+	set id $serial
+	set option '-s'
     else
 	adb devices -l
 
 	read -P "select transport_id: " tid
 
-	set model (adb -t $tid shell "getprop ro.product.model" 2> /dev/null)
-
-	string match -r "command not found" $model # for BISYAMON
-
-	if test $status -eq 0 # match "command not found"
-	    set model "BISYAMON"
-	    adb -t $tid shell hagocat | tee $model"_"$timestamp"_hagocat.log"
-	else
-	    set model (string trim -c '' $model) # important to strip ^M
-
-	    set model (string replace -a ' ' _ $model)
-	    set model (string replace -r -a '[()]' '' $model) # to remove the braces. e.g. mogo g(30)
-
-	    adb -t $tid shell logcat | tee $model"_"$timestamp"_logcat.log"
-	end
+	set id $tid
+	set option '-t'
     end
+
+    # check if target device has getprop
+    if set output (adb $option $id shell "which getprop" 2>&1)
+	if string match -r 'getprop' $output > /dev/null
+	    set model (adb $option $id shell "getprop ro.product.model" | sed 's/\r//; s/  */-/g; s/[()]//g')
+	    set logcmd logcat
+	else
+	    set model "BISYAMON"
+	    set logcmd hagocat
+	end
+
+	set timestamp (date "+%Y%m%d_%H%M%S")
+	echo $model $logcmd $timestamp
+
+	adb $option $id shell $logcmd | tee $model"_"$timestamp"_"$logcmd".log"
+    else
+	echo $output >&2
+    end
+
 end
