@@ -1,5 +1,5 @@
 function androidlog
-    argparse s/serial h/help -- $argv
+    argparse h/help s/serial= t/transport_id= -- $argv
     or return
 
     if set -ql _flag_help
@@ -8,11 +8,18 @@ function androidlog
     end
 
     if set -ql _flag_serial
-	set mode serial
 	set serial $argv[1]
 
 	set id $serial
 	set option '-s'
+    else if set -ql _flag_transport_id # tentative
+	set transport_id $argv[1]
+
+	set id $transport_id
+	set option '-t'
+
+	echo transport_id $id
+	return
     else
 	adb devices -l
 
