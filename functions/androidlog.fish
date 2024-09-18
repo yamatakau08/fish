@@ -23,7 +23,8 @@ function androidlog
     else
 	adb devices -l
 
-	read -P "select transport_id: " tid
+	read -l tid --prompt-str="select transport_id: " \
+	    or return 1
 
 	set id $tid
 	set option '-t'
