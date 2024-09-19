@@ -17,14 +17,26 @@ function androidlog
 
 	set id $transport_id
 	set option '-t'
-
-	echo transport_id $id
-	return
     else
-	adb devices -l
+	set output (adb devices -l | sed 's/\r//')
+	echo $output
 
-	read -l tid --prompt-str="select transport_id: " \
+	# check the number of the adb devices found
+	# if device is not found, need to return
+	if ! string match --regex 'transport' $output > /dev/null
+	    echo "adb devices not found"
+	    return 0
+	end
+
+	while read -l tid --prompt-str="select transport_id: " \
 	    or return 1
+
+	    if string match --regex '^[1-9]\d*' $tid > /dev/null # tid is digit
+		break
+	    else
+		continue
+	    end
+	end
 
 	set id $tid
 	set option '-t'
@@ -32,7 +44,7 @@ function androidlog
 
     # check if target device has getprop
     if set output (adb $option $id shell "which getprop" 2>&1)
-	if string match -r 'getprop' $output > /dev/null
+	if string match --regex 'getprop' $output > /dev/null
 	    set model (adb $option $id shell "getprop ro.product.model" | sed 's/\r//; s/  */-/g; s/[()]//g')
 	    set logcmd logcat
 	else
