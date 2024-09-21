@@ -18,8 +18,7 @@ function androidlog
 	set id $transport_id
 	set option '-t'
     else
-	set output (adb devices -l | sed 's/\r//')
-	echo $output
+	set output (adb devices -l | tee /dev/tty | sed 's/\r//')
 
 	# check the number of the adb devices found
 	# if device is not found, need to return
