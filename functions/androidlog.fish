@@ -3,7 +3,8 @@ function androidlog
     or return
 
     if set -ql _flag_help
-	echo 'usage [-s|--serial] SERIAL'
+	set name (status current-command)
+	echo "Usage: $cmd_name [-s|--serial SERIAL] [-t|--transport_id ID]"
 	return 0
     end
 
@@ -13,7 +14,7 @@ function androidlog
     else if set -ql _flag_transport_id
 	set id $_flag_transport_id
 	set option '-t'
-    else
+    else # interactive use
 	set output (adb devices -l | tee /dev/tty | sed 's/\r//')
 
 	# check the number of the adb devices found
