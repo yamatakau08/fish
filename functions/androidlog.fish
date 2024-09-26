@@ -8,14 +8,10 @@ function androidlog
     end
 
     if set -ql _flag_serial
-	set serial $argv[1]
-
-	set id $serial
+	set id $_flag_serial
 	set option '-s'
-    else if set -ql _flag_transport_id # tentative
-	set transport_id $argv[1]
-
-	set id $transport_id
+    else if set -ql _flag_transport_id
+	set id $_flag_transport_id
 	set option '-t'
     else
 	set output (adb devices -l | tee /dev/tty | sed 's/\r//')
