@@ -5,16 +5,32 @@
 # Moto g53J INFO: Texture: 720x1600
 
 function myscrcpy
+    argparse -x 's,t' h/help s/serial= t/transport_id= -- $argv
+    or return
 
-    ## list android devices
-    adb devices -l
+    if set -ql _flag_help
+	set cmd_name (status current-command)
+	echo "Usage: $cmd_name [-s|--serial SERIAL] [-t|--transport_id ID]"
+	return 0
+    end
 
-    read -P "select transport_id: " tid
+    if set -ql _flag_serial
+	set serial $_flag_serial
+    else if set -ql _flag_transport_id
+	set tid $_flag_transport_id
+    else
+	## list android devices
+	adb devices -l
 
-    ## get ro.serialno
-    set serial_no (adb devices -l | grep -i "transport_id:$tid")
-    set serial_no (string split ' ' $serial_no)
-    set serial_no $serial_no[1]
+	read -P "select transport_id: " tid
+    end
+
+    if not set -ql serial # not defined serial variable in the above
+	## get ro.serialno
+	# remove CR=\r=^M (*)
+	# (*) dos adb command outputs appended CR=\r=^M
+	set serial (adb -t $tid shell getprop ro.serialno | sed 's/\r//')
+    end
 
     ## get ro.product.model
     # set model (adb -t $tid shell "getprop ro.product.model")
@@ -31,17 +47,19 @@ function myscrcpy
 
     if string match --ignore-case --regex 'CYGWIN' $xuname
 	set cmdscrcpy ~/OneDrive/archive/scrcpy-win64-v2.4/scrcpy-win64-v2.4/scrcpy.exe
-	set screen_record_dir c:\\yama\\OneDrive\\tmp\\scrcpy_record
+	#set cmdscrcpy '/cygdrive/c/winbin/scrcpy-win64-v2.4/scrcpy.exe'
+	set screen_record_dir 'c:\\yama\\OneDrive\\tmp\\scrcpy_record'
 	set screen_record_dir '.'
 	set screen_record_file $screen_record_dir/$model-(date +'%Y%m%d-%H%M%S').mp4
 	echo $screen_record_file
     else if string match --ignore-case --regex 'Darwin' $xuname
 	set cmdscrcpy /usr/local/bin/scrcpy
 	set screen_record_dir ~/tmp/scrcpy_record
+	set screen_record_dir '.'
 	set screen_record_file $screen_record_dir/$model-(date +'%Y%m%d-%H%M%S').mp4
     else
 	echo $xuname is not supported > /dev/stderr
-	return
+	return 1
     end
 
     # need to make directory to store the screen copy file
@@ -50,7 +68,16 @@ function myscrcpy
     end
 
     ## scrcpy execute
-    $cmdscrcpy --serial $serial_no --video-codec=h264 --max-size=1920 --max-fps=60 --keyboard=uhid --show-touches --record=$screen_record_file --verbosity=verbose --no-audio
-    # --no-audio : Disable audio forwarding.
+    $cmdscrcpy \
+	--serial $serial \
+	--video-codec=h264 \
+	--max-size=1920 \
+	--max-fps=60 \
+	--keyboard=uhid \
+	--show-touches \
+	--record=$screen_record_file \
+	--verbosity=verbose \
+	--no-audio   # Disable audio forwarding.
     # --window-width 1000 --window-height 2500
+
 end
