@@ -1,9 +1,5 @@
-##
-# window_title option is not specified
-# seed 921600
-
 function myteraterm
-    argparse window_title= speed= model= -- $argv
+    argparse window_title= speed= model= window_positon_x= window_position_y= comport= -- $argv
     or return
 
     if set -ql _flag_window_title
@@ -18,78 +14,60 @@ function myteraterm
 	set model $_flag_model
     end
 
+    if set -ql _flag_window_position_x
+	set window_position_x $_flag_window_position_x
+    else
+	set window_position_x 280
+    end
+
+    if set -ql _flag_window_position_y
+	set window_position_y $_flag_window_position_y
+    else
+	set window_position_y 20
+    end
+
+    ## script dir
     set script_dir (dirname (status filename))
 
     ## comport
-    #set $comport (ruby $script_dir/comport.rb | grep 'USB Serial Port' | sed -E 's/.*\(COM(.*)\).*/\1/')
+    # > ruby ./comport.rb
+    # Select * From Win32_PnPEntity
+    # "USB Serial Port (COM55)"
+    # "LGE Mobile USB Serial Port (COM53)"
+    #set comport (ruby $script_dir/comport.rb | grep 'USB Serial Port' | sed -E 's/.*\(COM(.*)\).*/\1/')
+    set comport (ruby $script_dir/comport.rb | sed -n -e '/^"USB Serial Port/{s/^.*COM//; s/).*$//p}')
 
     ## setup file
-    set setup_file "$script_dir/TERATERM.INI"
-    echo $setup_file
+    set setup_file_dir (cygpath --dos $script_dir)
+    set setup_file "$setup_file_dir/TERATERM.INI"
 
     ## LOG FILE
-    #set log_dir (cygpath -d -a .)
-    set log_dir '/tmp'
-    set log_file "$log_dir\\$model_serial_console_$(date +"%Y%m%d_%H%M%S").log"
-    echo $log_file
+    set log_dir (cygpath --dos --absolute .) # need --absolute t
+    set log_file "$log_dir\\serial_console_$(date +"%Y%m%d_%H%M%S").log"
 
-    return
+    ## TeraTerm program
+    # both path styles are ok.
+    set teraterm '/cygdrive/C/Program Files (x86)\teraterm\ttermpro.exe'
+    set teraterm 'C:/Program Files (x86)\teraterm\ttermpro.exe'
+
+    echo "teraterm: $teraterm"
+    echo "setup_file: $setup_file"
+    echo "window_title: $window_title"
+    echo "window_position: x $window_position_x , y: $window_position_y"
+    echo "comport $comport[1]"
+    echo "comport $comport[2]"
+    echo "baud/speed: $speed"
+    echo "model: $model"
+    echo "Log to $log_file"
+
+    ## TeraTerm execution
+    $teraterm \
+	/F="$setup_file" \
+	/X="$window_position_x" \
+	/Y="$window_position_y" \
+	/C="$comport" \
+	/BAUD="$speed" \
+	/W="$window_title" \
+	/L="$log_file" &
 
 end
-
-function xteraterm
-    argparse setup_file= win_pos_x= win_pos_y= comport= baud= window_title= log_file= -- $argv
-    return 0
-
-    set teraterm "hoge"
-# "${TERATERM}" /F="${SETUP_FILE}" /X="${WINDOW_POSITION_X}" /Y="${WINDOW_POSITION_Y}" /C="${COMPORT}" /BAUD="${SPEED}" /W="${WINDOW_TITLE}" /L="${LOG_FILE}" &
-
-end
-
-
-# #! /bin/sh
-
-# SCRIPT_DIR=`dirname $0`
-
-# # This script launch Tera Term with the serial port which is bind actual com port.
-# # But sometimes mapping may be wrong.
-# # In that case, change the com port assigned with device manager.
-
-# if [ -z "$1" ]; then
-#     WINDOW_TITLE="Serial Console MTK"
-# else
-#     MODEL=$1
-#     WINDOW_TITLE="Serial Console ${MODEL} MTK"
-# fi
-
-# ## SPEED
-# SPEED="921600"
-
-# ## COMPORT
-# COMPORT=`ruby $SCRIPT_DIR/comport.rb | grep 'USB Serial Port' | sed -E 's/.*\(COM(.*)\).*/\1/'`
-
-# ## TERATERM needs SETUP_FILE must be full path
-# SETUP_FILE=`cygpath -d -a $SCRIPT_DIR/TERATERM.INI`
-
-# ## LOG FILE
-# echo "CG1EG1.SH $PWD"
-# LOG_DIR=`cygpath -d -a .`
-# LOG_FILE="$LOG_DIR\\${MODEL}_serial_console_$(date +"%Y%m%d_%H%M%S").log"
-
-# ## WINDOW POSITION
-# WINDOW_POSITION_X=280
-# WINDOW_POSITION_Y=20
-
-# # both are ok
-# TERATERM='/cygdrive/C/Program Files (x86)\teraterm\ttermpro.exe'
-# TERATERM='C:/Program Files (x86)\teraterm\ttermpro.exe'
-
-# echo $TERATERM
-# echo $SETUP_FILE
-# echo $WINDOW_TITLE
-# echo $WINDOW_POSITION_X $WINDOW_POSITION_Y
-# echo $COMPORT
-# echo $SPEED
-# echo "Log to $LOG_FILE"
-
-# "${TERATERM}" /F="${SETUP_FILE}" /X="${WINDOW_POSITION_X}" /Y="${WINDOW_POSITION_Y}" /C="${COMPORT}" /BAUD="${SPEED}" /W="${WINDOW_TITLE}" /L="${LOG_FILE}" &
