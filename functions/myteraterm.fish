@@ -34,6 +34,9 @@ function myteraterm
     # Select * From Win32_PnPEntity
     # "USB Serial Port (COM55)"
     # "LGE Mobile USB Serial Port (COM53)"
+    #
+    # 'USB Serial Port' # benten.sh, cg1eg1.sh ifcon.sh, ws.sh
+    # 'Silicon Labs Quad CP2108 USB to UART Bridge: Interface 0' # ebisu.sh
     #set comport (ruby $script_dir/comport.rb | grep 'USB Serial Port' | sed -E 's/.*\(COM(.*)\).*/\1/')
     #set comport (ruby $script_dir/comport.rb | sed -n -e '/^"USB Serial Port/{s/^.*COM//; s/).*$//p}')
     set comport (ruby $script_dir/comport.rb | sed -n '/^"USB Serial Port/{s/.*COM\(.*\)).*/\1/p}')
