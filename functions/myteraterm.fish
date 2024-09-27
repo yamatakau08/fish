@@ -35,7 +35,8 @@ function myteraterm
     # "USB Serial Port (COM55)"
     # "LGE Mobile USB Serial Port (COM53)"
     #set comport (ruby $script_dir/comport.rb | grep 'USB Serial Port' | sed -E 's/.*\(COM(.*)\).*/\1/')
-    set comport (ruby $script_dir/comport.rb | sed -n -e '/^"USB Serial Port/{s/^.*COM//; s/).*$//p}')
+    #set comport (ruby $script_dir/comport.rb | sed -n -e '/^"USB Serial Port/{s/^.*COM//; s/).*$//p}')
+    set comport (ruby $script_dir/comport.rb | sed -n '/^"USB Serial Port/{s/.*COM\(.*\)).*/\1/p}')
 
     ## setup file
     set setup_file_dir (cygpath --dos $script_dir)
