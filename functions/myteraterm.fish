@@ -1,10 +1,6 @@
 function myteraterm
-    argparse window_title= speed= model= window_positon_x= window_position_y= comport= -- $argv
+    argparse comport= speed= model= -- $argv
     or return
-
-    if set -ql _flag_window_title
-	set window_title $_flag_window_title
-    end
 
     if set -ql _flag_speed
 	set speed $_flag_speed
@@ -12,19 +8,12 @@ function myteraterm
 
     if set -ql _flag_model
 	set model $_flag_model
+	set window_title $_flag_model
     end
 
-    if set -ql _flag_window_position_x
-	set window_position_x $_flag_window_position_x
-    else
-	set window_position_x 280
-    end
-
-    if set -ql _flag_window_position_y
-	set window_position_y $_flag_window_position_y
-    else
-	set window_position_y 20
-    end
+    ## windows position x,y fixed
+    set window_position_x 280
+    set window_position_y 20
 
     ## script dir
     set script_dir (dirname (status filename))
@@ -35,8 +24,8 @@ function myteraterm
     # "USB Serial Port (COM55)"
     # "LGE Mobile USB Serial Port (COM53)"
     #
-    # 'USB Serial Port' # benten.sh, cg1eg1.sh ifcon.sh, ws.sh
-    # 'Silicon Labs Quad CP2108 USB to UART Bridge: Interface 0' # ebisu.sh
+    # 'USB Serial Port' # benten, cg1eg1 ifcon, ws
+    # 'Silicon Labs Quad CP2108 USB to UART Bridge: Interface 0' # ebisu
     #set comport (ruby $script_dir/comport.rb | grep 'USB Serial Port' | sed -E 's/.*\(COM(.*)\).*/\1/')
     #set comport (ruby $script_dir/comport.rb | sed -n -e '/^"USB Serial Port/{s/^.*COM//; s/).*$//p}')
     set comport (ruby $script_dir/comport.rb | sed -n '/^"USB Serial Port/{s/.*COM\(.*\)).*/\1/p}')
@@ -61,17 +50,17 @@ function myteraterm
     echo "comport $comport[1]"
     echo "comport $comport[2]"
     echo "baud/speed: $speed"
-    echo "model: $model"
     echo "Log to $log_file"
 
     ## TeraTerm execution
+    # refer https://teratermproject.github.io/manual/4/ja/commandline/teraterm.html
     $teraterm \
-	/F="$setup_file" \
-	/X="$window_position_x" \
-	/Y="$window_position_y" \
 	/C="$comport" \
-	/BAUD="$speed" \
+	/F="$setup_file" \
+	/L="$log_file" \
+	/SPEED="$speed" \
 	/W="$window_title" \
-	/L="$log_file" &
+	/X="$window_position_x" \
+	/Y="$window_position_y" &
 
 end
