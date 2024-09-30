@@ -36,7 +36,8 @@ function myteraterm
 
     ## LOG FILE
     set log_dir (cygpath --dos --absolute .) # need --absolute t
-    set log_file "$log_dir\\serial_console_$(date +"%Y%m%d_%H%M%S").log"
+    ##set log_file "$log_dir\\serial_console_$(date +"%Y%m%d_%H%M%S").log"
+    set log_file (printf "%s\\\%s_serial_console_%s.log" $log_dir $model $(date +"%Y%m%d_%H%M%S"))
 
     ## TeraTerm program
     # both path styles are ok.
@@ -54,6 +55,7 @@ function myteraterm
 
     ## TeraTerm execution
     # refer https://teratermproject.github.io/manual/4/ja/commandline/teraterm.html
+    # /W="hoge" shows "hoge VT"  in Windows Title Text, can't understand the reason why.
     $teraterm \
 	/C="$comport" \
 	/F="$setup_file" \
