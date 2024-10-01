@@ -55,14 +55,14 @@ function myteraterm
 
     ## TeraTerm execution
     # refer https://teratermproject.github.io/manual/4/ja/commandline/teraterm.html
-    # /W="hoge" shows "hoge VT"  in Windows Title Text, can't understand the reason why.
+    # /W="hoge" shows "hoge VT"  in Windows Title Text, can't understand the reason why VT appear.
     $teraterm \
 	/C="$comport" \
 	/F="$setup_file" \
 	/L="$log_file" \
 	/SPEED="$speed" \
-	/W="$window_title" \
 	/X="$window_position_x" \
-	/Y="$window_position_y" &
+	/Y="$window_position_y" \
+	/W="$window_title" &
 
 end
