@@ -2,6 +2,36 @@ function myteraterm
     argparse comport= speed= model= -- $argv
     or return
 
+    ## script dir
+    set script_dir (dirname (status filename))
+
+    ## comport
+    if set -ql _flag_comport
+	set comport $_flag_comport
+    else
+	# > ruby ./comport.rb
+	# Select * From Win32_PnPEntity
+	# "USB Serial Port (COM55)"
+	# "LGE Mobile USB Serial Port (COM53)"
+	#
+	# 'USB Serial Port' # benten, cg1eg1 ifcon, ws
+	# 'Silicon Labs Quad CP2108 USB to UART Bridge: Interface 0' # ebisu
+	#set comport (ruby $script_dir/comport.rb | grep 'USB Serial Port' | sed -E 's/.*\(COM(.*)\).*/\1/')
+	#set comport (ruby $script_dir/comport.rb | sed -n -e '/^"USB Serial Port/{s/^.*COM//; s/).*$//p}')
+	set comports (ruby $script_dir/comport.rb | sed -n '/^"USB Serial Port/{s/.*COM\(.*\)).*/\1/p}')
+	echo "comports: $comports"
+
+	switch (count $comports)
+	case 1
+	    set comport $comports
+	case 4 # 4ch
+	    set comport $comports[2] # fixed
+	case '*'
+	    echo "too many comports, remove the one jig"
+	    return 1
+	end
+    end
+
     if set -ql _flag_speed
 	set speed $_flag_speed
     end
@@ -14,21 +44,6 @@ function myteraterm
     ## windows position x,y fixed
     set window_position_x 280
     set window_position_y 20
-
-    ## script dir
-    set script_dir (dirname (status filename))
-
-    ## comport
-    # > ruby ./comport.rb
-    # Select * From Win32_PnPEntity
-    # "USB Serial Port (COM55)"
-    # "LGE Mobile USB Serial Port (COM53)"
-    #
-    # 'USB Serial Port' # benten, cg1eg1 ifcon, ws
-    # 'Silicon Labs Quad CP2108 USB to UART Bridge: Interface 0' # ebisu
-    #set comport (ruby $script_dir/comport.rb | grep 'USB Serial Port' | sed -E 's/.*\(COM(.*)\).*/\1/')
-    #set comport (ruby $script_dir/comport.rb | sed -n -e '/^"USB Serial Port/{s/^.*COM//; s/).*$//p}')
-    set comport (ruby $script_dir/comport.rb | sed -n '/^"USB Serial Port/{s/.*COM\(.*\)).*/\1/p}')
 
     ## setup file
     set setup_file_dir (cygpath --dos $script_dir)
@@ -48,8 +63,7 @@ function myteraterm
     echo "setup_file: $setup_file"
     echo "window_title: $window_title"
     echo "window_position: x $window_position_x , y: $window_position_y"
-    echo "comport $comport[1]"
-    echo "comport $comport[2]"
+    echo "comport $comport"
     echo "baud/speed: $speed"
     echo "Log to $log_file"
 
