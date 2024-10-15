@@ -3,7 +3,7 @@ function androidlog
     or return
 
     if set -ql _flag_help
-	set name (status current-command)
+	set cmd_name (status current-command)
 	echo "Usage: $cmd_name [-s|--serial SERIAL] [-t|--transport_id ID]"
 	return 0
     end
