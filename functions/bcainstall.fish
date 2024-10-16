@@ -6,14 +6,14 @@ function bcainstall
     set cmd_name (status current-command)
 
     if set -ql _flag_help
-	echo "Usage: $cmd_name [-c|--clean] apk"
+	echo "Usage: $cmd_name [-c|--clean] --apk apk_file"
 	return 0
     end
 
     if set -ql _flag_apk
 	set apk $_flag_apk
     else
-	echo "Usage: $name [-c|--clean] apk"
+	echo "Usage: $cmd_name [-c|--clean] --apk apk_file"
 	return 0
     end
 
@@ -36,16 +36,18 @@ function bcainstall
 	end
     end
 
-    set id $tid
+    if test -z $tid # when C-c is inputted
+	return 1
+    end
 
     if set -ql _flag_clean
 	set package_name "jp.co.sony.hes.home"
-	echo "uninstalling... $package_name"
+	echo "transport_id: $tid uninstalling... $package_name"
 	adb -t $tid uninstall $package_name 2> /dev/null
-	echo "clean install"
+	echo "transport_id: $tid clean install"
 	adb -t $tid install $apk
     else
-	echo "overwrite"
+	echo "transport_id: $tid overwrite"
 	adb -t $tid install -r $apk
     end
 
