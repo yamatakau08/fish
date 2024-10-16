@@ -179,3 +179,6 @@ set -g fish_color_command white
 ## but comment out the following, because `fish hoge.fish` doesn't work and no longer use Msys environment
 #cd $HOME
 
+alias cg1console="myteraterm --speed 921600 --model CG1"
+alias bluefinconsole="myteraterm --speed 115200 --model bulefin1.1"
+
