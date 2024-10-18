@@ -2,7 +2,7 @@
 function bcainstall
     argparse \
 	h/help \
-	clean \
+	c/clean \
 	# 'apk=!string match -r \'.+.apk\' "$_flag_value"' \
 	'apk=' \
 	-- $argv
@@ -47,10 +47,10 @@ function bcainstall
 	set package_name "jp.co.sony.hes.home"
 	echo "uninstalling... $package_name on transport_id: $tid"
 	adb -t $tid uninstall $package_name 2> /dev/null
-	echo "$_flag_apk clean install on transport_id: $tid "
-	adb -t $tid install $_flag_apk
+	echo "clean install $_flag_apk on transport_id: $tid "
+	pkginstall --tid $tid --clean $_flag_apk
     else
-	echo "$_flag_apk overwrite install on transport_id: $tid "
+	echo "overwrite install $_flag_apk on transport_id: $tid "
 	#adb -t $tid install -r $_flag_apk
 	pkginstall --tid $tid $_flag_apk
     end

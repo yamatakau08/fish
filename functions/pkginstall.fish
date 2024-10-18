@@ -11,7 +11,7 @@ function pkginstall
 
     if set -ql _flag_help
 	set cmd_name (status current-command)
-	echo "Usage: $cmd_name [--clean] apk_file"
+	echo "Usage: $cmd_name [--tid id] [--clean] apk_file"
 	return 0
     end
 
@@ -45,10 +45,10 @@ function pkginstall
     set apk_file $argv[1]
 
     if set -ql _flag_clean
-	echo "$_flag_clean installing $apk_file in tid: $tid ..."
+	echo "clean install $apk_file on transport_id: $tid ..."
 	adb -t $tid install $apk_file
     else
-	echo "overwrite installing $apk_file in tid: $tid ..."
+	echo "overwrite install $apk_file on transport_id: $tid ..."
 	adb -t $tid install -r $apk_file
     end
 
