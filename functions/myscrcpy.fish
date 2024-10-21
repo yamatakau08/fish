@@ -22,7 +22,19 @@ function myscrcpy
 	## list android devices
 	adb devices -l
 
-	read -P "select transport_id: " tid
+	while read -l tid --prompt-str="select transport_id: " \
+	    or return 1
+
+	    if string match --regex '^[1-9]\d*' $tid > /dev/null # tid is digit
+		break
+	    else
+		continue
+	    end
+	end
+
+	if test -z $tid # when C-c, C-d is inputted
+	    return 1
+	end
     end
 
     if not set -ql serial # not defined serial variable in the above
