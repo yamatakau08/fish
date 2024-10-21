@@ -22,7 +22,8 @@ function myscrcpy
 	## list android devices
 	adb devices -l
 
-	while read -l tid --prompt-str="select transport_id: " \
+	# remolve read option '-l'
+	while read tid --prompt-str="select transport_id: " \
 	    or return 1
 
 	    if string match --regex '^[1-9]\d*' $tid > /dev/null # tid is digit
