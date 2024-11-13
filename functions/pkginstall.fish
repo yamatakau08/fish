@@ -9,7 +9,7 @@ function pkginstall
 	-- $argv
     or return
 
-    set cmd_name (status current-command)
+    set cmd_name (status current-function)
 
     if set -ql _flag_help
 	set cmd_name (status current-command)

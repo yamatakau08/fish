@@ -9,7 +9,7 @@ function bcainstall
 	-- $argv
     or return
 
-    set -l cmd_name (status current-command)
+    set -l cmd_name (status current-function)
 
     if set -ql _flag_help
 	echo "Usage: $cmd_name [-c|--clean] --apk PACKAGE"
