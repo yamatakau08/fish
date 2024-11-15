@@ -59,8 +59,8 @@ function myscrcpy
     set xuname (uname)
 
     if string match --ignore-case --regex 'CYGWIN' $xuname
-	set cmdscrcpy ~/OneDrive/archive/scrcpy-win64-v2.4/scrcpy-win64-v2.4/scrcpy.exe
-	#set cmdscrcpy '/cygdrive/c/winbin/scrcpy-win64-v2.4/scrcpy.exe'
+#	set cmdscrcpy ~/OneDrive/archive/scrcpy-win64-v2.4/scrcpy-win64-v2.4/scrcpy.exe
+	set cmdscrcpy '/cygdrive/c/winbin/scrcpy-win64-v2.7/scrcpy.exe'
 	set screen_record_dir 'c:\\yama\\OneDrive\\tmp\\scrcpy_record'
 	set screen_record_dir '.'
 	set screen_record_file $screen_record_dir/$model-(date +'%Y%m%d-%H%M%S').mp4
