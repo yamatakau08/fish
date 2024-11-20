@@ -46,12 +46,12 @@ function bcainstall
 
     if set -ql _flag_clean
 	set package_name "jp.co.sony.hes.home"
-	echo "uninstalling... $package_name on transport_id: $tid"
+	echo "uninstalling $package_name on transport_id: $tid ..."
 	adb -t $tid uninstall $package_name 2> /dev/null
-	echo "$cmd_name clean install $_flag_apk on transport_id: $tid "
+	echo "$cmd_name clean install $_flag_apk on transport_id: $tid ..."
 	pkginstall --tid $tid --clean $_flag_apk
     else
-	echo "$cmd_name overwrite install $_flag_apk on transport_id: $tid "
+	echo "$cmd_name overwrite install $_flag_apk on transport_id: $tid ..."
 	#adb -t $tid install -r $_flag_apk
 	pkginstall --tid $tid $_flag_apk
     end
