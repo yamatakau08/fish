@@ -2,7 +2,7 @@ function myadbdevice
     set device_serials (adb devices -l | sed -n '2,$ s/^\([^ ]\+\) \+.*/\1/p')
 
     for serial in $device_serials
-	echo adb device serial: $serial
+	echo "(adb) device serial no:" $serial
 	adb -s $serial root > /dev/null
 
 	adb -s $serial shell getprop ro.build.fingerprint
