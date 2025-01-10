@@ -3,6 +3,11 @@ function myadbdevice
 
     for serial in $device_serials
 	echo "(adb) device serial no:" $serial
+
+	set -l device_id (string sub --start -12 $serial)
+	#set -l device_id (string sub --start -12 $serial | sed 's/../&:/g; s/:$//')
+	echo "device id:" $device_id
+
 	adb -s $serial root > /dev/null
 
 	adb -s $serial shell getprop ro.build.fingerprint
