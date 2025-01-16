@@ -182,3 +182,11 @@ set -g fish_color_command white
 alias cg1console="myteraterm --speed 921600 --model CG1"
 alias bluefinconsole="myteraterm --speed 115200 --model bulefin1.1"
 
+## Python numpy on Cygwin
+fish_add_path /lib/lapack # effect
+#set -x HTTP_PROXY  "http://"$PROXY_SERVER":"$PROXY_PORT
+#set -x HTTPS_PROXY "http://"$PROXY_SERVER":"$PROXY_PORT
+
+## abbr
+# for onedrive
+abbr --add onedrive cd "'/cygdrive/c/Users/0000910700/OneDrive - $onedrive_company'"
