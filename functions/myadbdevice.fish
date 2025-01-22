@@ -19,7 +19,7 @@ function myadbdevice
 	end
 
 	set -l header_json_file /mnt/vendor/persist/$company/product_config/Header.json
-	set -l output (adb -s $serial shell ls $header_json_file)
+	set -l output (adb -s $serial shell ls $header_json_file | sed 's/\r//') # remove CRLF of adb output
 	if string match $output $header_json_file > /dev/null
 	    adb -s $serial shell cat $header_json_file
 	end
