@@ -6,6 +6,11 @@ switch (uname)
 
 	set -x NO_PROXY localhost # for anki,anki-connect
 
+	## abbr
+	# for onedrive
+	abbr --add onedrive cd "'/cygdrive/c/Users/0000910700/OneDrive - $onedrive_company'"
+	abbr --add mpv /usr/local/Cellar/mpv/0.39.0_1/bin/mpv
+
     case 'MINGW64*'
         # on MSYS2 msys2.exe mingw32/64.exe
         # to set default directory to your home directory
@@ -187,6 +192,7 @@ fish_add_path /lib/lapack # effect
 #set -x HTTP_PROXY  "http://"$PROXY_SERVER":"$PROXY_PORT
 #set -x HTTPS_PROXY "http://"$PROXY_SERVER":"$PROXY_PORT
 
-## abbr
-# for onedrive
-abbr --add onedrive cd "'/cygdrive/c/Users/0000910700/OneDrive - $onedrive_company'"
+# for Mac Ports
+set -x PATH /opt/local/bin $PATH 2> /dev/null
+# for Python opencv(34)
+set -x PYTHONPATH /opt/local/lib/opencv4
