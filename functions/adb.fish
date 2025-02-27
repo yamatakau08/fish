@@ -8,8 +8,6 @@ function adb
       else
         command adb $argv
       end
-    case 'CYGWIN*'
-	command adb $argv
     case '*'
 	command adb $argv
   end
